@@ -9,9 +9,9 @@ import type { Project } from '@/types';
 
 // 3.3 CARD COMPONENTS - Project Card
 const ProjectCard = ({ project }: { project: Project }) => (
-  <div className="group relative bg-[rgba(17,34,64,0.7)] backdrop-blur-xl border border-[rgba(100,255,218,0.12)] rounded-[20px] overflow-hidden transition-all duration-400 cursor-pointer hover:-translate-y-3 hover:border-[rgba(100,255,218,0.3)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.4),0_0_30px_rgba(100,255,218,0.2)]">
+  <div className="project-card group relative bg-[rgba(17,34,64,0.7)] backdrop-blur-xl border border-[rgba(100,255,218,0.12)] rounded-[20px] overflow-hidden transition-all duration-400 cursor-pointer hover:-translate-y-3 hover:border-[rgba(100,255,218,0.3)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.4),0_0_30px_rgba(100,255,218,0.2)]">
     {/* Image Section */}
-    <div className="relative h-[250px] overflow-hidden bg-gradient-to-br from-[#112240] to-[#1d3557]">
+    <div className="project-card-image relative h-[250px] overflow-hidden">
       {project.cover_image ? (
         <Image
           src={project.cover_image}
@@ -24,8 +24,8 @@ const ProjectCard = ({ project }: { project: Project }) => (
       )}
       
       {/* Overlay with Actions */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[rgba(10,25,47,0.95)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-        <div className="flex gap-4 w-full">
+      <div className="project-card-overlay absolute inset-0 bg-gradient-to-b from-transparent to-[rgba(10,25,47,0.95)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+        <div className="project-card-actions flex gap-4 w-full">
           <Link 
             href={`/projects/${project.slug}`}
             className="flex-1 py-3 text-center bg-[rgba(100,255,218,0.1)] backdrop-blur-md text-accent border border-[rgba(100,255,218,0.3)] rounded-xl font-semibold text-sm hover:bg-gradient-to-br hover:from-accent hover:to-[#00d4ff] hover:text-bg-primary hover:border-transparent transition-all"
@@ -48,15 +48,15 @@ const ProjectCard = ({ project }: { project: Project }) => (
 
     {/* Content Section */}
     <div className="p-6">
-      <span className="inline-block px-3.5 py-1.5 bg-[rgba(100,255,218,0.1)] text-accent text-xs font-bold uppercase tracking-wider rounded-md mb-3">
+      <span className="project-category inline-block px-3.5 py-1.5 bg-[rgba(100,255,218,0.1)] text-accent text-xs font-bold uppercase tracking-wider rounded-md mb-3">
         {project.category || 'Development'}
       </span>
 
-      <h3 className="text-2xl font-bold text-text-primary mb-3 leading-tight group-hover:text-accent transition-colors">
+      <h3 className="project-title text-2xl font-bold text-text-primary mb-3 leading-tight group-hover:text-accent transition-colors">
         {project.title}
       </h3>
 
-      <p className="text-text-secondary text-[0.9375rem] leading-relaxed mb-5 line-clamp-3">
+      <p className="project-description text-text-secondary text-[0.9375rem] leading-relaxed mb-5 line-clamp-3">
         {project.short_description}
       </p>
 
@@ -65,7 +65,7 @@ const ProjectCard = ({ project }: { project: Project }) => (
         {project.technologies.slice(0, 4).map((tech) => (
           <span 
             key={tech.id}
-            className="px-3 py-1.5 bg-[rgba(100,255,218,0.05)] border border-[rgba(100,255,218,0.2)] rounded-lg text-accent text-xs font-mono transition-transform group-hover:bg-[rgba(100,255,218,0.1)] hover:-translate-y-0.5"
+            className="tech-badge px-3 py-1.5 bg-[rgba(100,255,218,0.05)] border border-[rgba(100,255,218,0.2)] rounded-lg text-accent text-xs font-mono transition-transform group-hover:bg-[rgba(100,255,218,0.1)] hover:-translate-y-0.5"
           >
             {tech.name}
           </span>
@@ -110,7 +110,7 @@ export default function ProjectsPage() {
   });
 
   return (
-    <section className="min-h-screen py-32 px-6 lg:px-8 relative bg-[linear-gradient(180deg,#0a192f_0%,#112240_50%,#0a192f_100%)]">
+    <section className="hero-section min-h-screen py-32 px-6 lg:px-8 relative">
       {/* Background Decor */}
       <div className="absolute top-0 left-0 right-0 h-[200px] bg-[radial-gradient(ellipse_at_top,rgba(100,255,218,0.05),transparent)] pointer-events-none"></div>
 
@@ -162,7 +162,7 @@ export default function ProjectsPage() {
               placeholder="Search projects..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-14 pr-5 py-3.5 bg-[rgba(17,34,64,0.6)] backdrop-blur-md border border-[rgba(100,255,218,0.2)] rounded-xl text-text-primary outline-none focus:bg-[rgba(17,34,64,0.8)] focus:border-accent focus:shadow-[0_0_0_3px_rgba(100,255,218,0.1)] transition-all"
+              className="form-input w-full pl-14 pr-5 py-3.5 bg-[rgba(17,34,64,0.6)] backdrop-blur-md border border-[rgba(100,255,218,0.2)] rounded-xl text-text-primary outline-none focus:bg-[rgba(17,34,64,0.8)] focus:border-accent focus:shadow-[0_0_0_3px_rgba(100,255,218,0.1)] transition-all"
             />
           </div>
         </div>
@@ -172,17 +172,17 @@ export default function ProjectsPage() {
           {loading ? (
              [...Array(6)].map((_, i) => (
                <div key={i} className="bg-[rgba(17,34,64,0.6)] backdrop-blur-md border border-[rgba(100,255,218,0.1)] rounded-[20px] overflow-hidden">
-                 <div className="w-full h-[250px] bg-[linear-gradient(90deg,rgba(100,255,218,0.05)_0%,rgba(100,255,218,0.1)_50%,rgba(100,255,218,0.05)_100%)] bg-[size:200%_100%] animate-[shimmerSkeleton_1.5s_infinite]"></div>
+                 <div className="skeleton-shimmer w-full h-[250px]"></div>
                  <div className="p-6">
-                   <div className="h-3 bg-[linear-gradient(90deg,rgba(100,255,218,0.05)_0%,rgba(100,255,218,0.1)_50%,rgba(100,255,218,0.05)_100%)] bg-[size:200%_100%] rounded-md w-3/4 mb-4 animate-[shimmerSkeleton_1.5s_infinite]"></div>
-                   <div className="h-6 bg-[linear-gradient(90deg,rgba(100,255,218,0.05)_0%,rgba(100,255,218,0.1)_50%,rgba(100,255,218,0.05)_100%)] bg-[size:200%_100%] rounded-md w-1/2 mb-4 animate-[shimmerSkeleton_1.5s_infinite]"></div>
+                   <div className="skeleton-shimmer h-3 rounded-md w-3/4 mb-4"></div>
+                   <div className="skeleton-shimmer h-6 rounded-md w-1/2 mb-4"></div>
                    <div className="space-y-2 mb-6">
-                     <div className="h-2 bg-[linear-gradient(90deg,rgba(100,255,218,0.05)_0%,rgba(100,255,218,0.1)_50%,rgba(100,255,218,0.05)_100%)] bg-[size:200%_100%] rounded-md w-full animate-[shimmerSkeleton_1.5s_infinite]"></div>
-                     <div className="h-2 bg-[linear-gradient(90deg,rgba(100,255,218,0.05)_0%,rgba(100,255,218,0.1)_50%,rgba(100,255,218,0.05)_100%)] bg-[size:200%_100%] rounded-md w-[85%] animate-[shimmerSkeleton_1.5s_infinite]"></div>
+                     <div className="skeleton-shimmer h-2 rounded-md w-full"></div>
+                     <div className="skeleton-shimmer h-2 rounded-md w-[85%]"></div>
                    </div>
                    <div className="flex gap-2">
                      {[1, 2, 3].map(j => (
-                       <div key={j} className="h-6 w-16 bg-[linear-gradient(90deg,rgba(100,255,218,0.05)_0%,rgba(100,255,218,0.1)_50%,rgba(100,255,218,0.05)_100%)] bg-[size:200%_100%] rounded-md animate-[shimmerSkeleton_1.5s_infinite]"></div>
+                       <div key={j} className="skeleton-shimmer h-6 w-16 rounded-md"></div>
                      ))}
                    </div>
                  </div>

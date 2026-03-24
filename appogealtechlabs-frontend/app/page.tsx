@@ -1,7 +1,7 @@
 import Hero from '@/components/Hero';
 import FeaturedProjects from '@/components/FeaturedProjects';
 import ServicesOverview from '@/components/ServicesOverview';
-import TestimonialsSlider from '@/components/TestimonialsSlider';
+import TestimonialsCarousel from '@/components/TestimonialsCarousel';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
@@ -11,7 +11,7 @@ export default function Home() {
       <Hero />
       <FeaturedProjects />
       <ServicesOverview />
-      <TestimonialsSlider />
+      <TestimonialsCarousel />
       
       {/* Final CTA Section */}
       <section className="py-32 bg-bg-primary relative overflow-hidden">

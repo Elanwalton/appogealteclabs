@@ -1,6 +1,6 @@
 export default function Loading() {
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-gradient-to-br from-[#0a192f] via-[#112240] to-[#0a192f]">
+    <div className="page-loader fixed inset-0 z-[9999] flex items-center justify-center">
       <div className="text-center max-w-[400px] w-full px-4">
         
         {/* Logo */}

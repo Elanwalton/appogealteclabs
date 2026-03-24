@@ -71,3 +71,34 @@ export interface ContactFormData {
   subject: string;
   message: string;
 }
+
+// Blog
+export interface BlogCategory {
+  id: number;
+  name: string;
+  slug: string;
+}
+
+export interface BlogTag {
+  id: number;
+  name: string;
+  slug: string;
+}
+
+export interface BlogPost {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  image: string | null;
+  category: BlogCategory | null;
+  tags: BlogTag[];
+  published_at: string;
+  updated_at?: string;
+  views: number;
+  read_time: number;
+  author: string;
+  is_active: boolean;
+  featured: boolean;
+}

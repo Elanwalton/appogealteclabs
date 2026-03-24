@@ -6,6 +6,7 @@ import {
   Twitter, Linkedin, Github, Instagram, Globe, 
   Send, Mail, Phone, MapPin, ArrowRight, Heart, ChevronUp 
 } from 'lucide-react';
+import NewsletterForm from './NewsletterForm';
 
 export default function Footer() {
   const [showBackToTop, setShowBackToTop] = useState(false);
@@ -23,7 +24,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative pt-24 pb-8 px-8 bg-gradient-to-b from-[#0a192f] to-[#112240] border-t border-[rgba(100,255,218,0.1)] overflow-hidden">
+    <footer className="footer relative pt-24 pb-8 px-8 border-t border-[rgba(100,255,218,0.1)] overflow-hidden">
       {/* Top Gradient Line */}
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[rgba(100,255,218,0.5)] to-transparent"></div>
 
@@ -33,12 +34,12 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16 pb-16 border-b border-[rgba(100,255,218,0.1)]">
           
           {/* Company Info */}
-          <div className="lg:col-span-1.5 max-w-sm">
+          <div className="lg:col-span-1.5 max-w-sm footer-logo">
             <div className="flex flex-col gap-1 mb-6">
-              <span className="text-2xl font-extrabold bg-gradient-to-br from-accent to-[#00d4ff] bg-clip-text text-transparent leading-tight">Appogeal</span>
-              <span className="text-2xl font-extrabold bg-gradient-to-br from-accent to-[#00d4ff] bg-clip-text text-transparent leading-tight">TechLabs</span>
+              <span className="logo-text text-2xl font-extrabold bg-gradient-to-br from-accent to-[#00d4ff] bg-clip-text text-transparent leading-tight">Appogeal</span>
+              <span className="logo-text text-2xl font-extrabold bg-gradient-to-br from-accent to-[#00d4ff] bg-clip-text text-transparent leading-tight">TechLabs</span>
             </div>
-            <p className="text-text-secondary text-[0.9375rem] leading-relaxed mb-8">
+            <p className="footer-tagline text-text-secondary text-[0.9375rem] leading-relaxed mb-8">
               Building digital excellence, one project at a time. 
               Transforming ideas into powerful web experiences.
             </p>
@@ -47,7 +48,7 @@ export default function Footer() {
                 <a 
                   key={idx}
                   href="#" 
-                  className="w-11 h-11 flex items-center justify-center bg-[rgba(100,255,218,0.05)] border border-[rgba(100,255,218,0.2)] rounded-xl text-accent transition-all duration-300 hover:bg-[rgba(100,255,218,0.1)] hover:border-[rgba(100,255,218,0.4)] hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(100,255,218,0.2)]"
+                  className="social-link w-11 h-11 flex items-center justify-center bg-[rgba(100,255,218,0.05)] border border-[rgba(100,255,218,0.2)] rounded-xl text-accent transition-all duration-300 hover:bg-[rgba(100,255,218,0.1)] hover:border-[rgba(100,255,218,0.4)] hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(100,255,218,0.2)]"
                   aria-label="Social Link"
                 >
                   <Icon size={20} />
@@ -58,8 +59,8 @@ export default function Footer() {
           
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-bold text-text-primary mb-6 relative pb-3 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-10 after:h-0.5 after:bg-gradient-to-r after:from-accent after:to-transparent">Quick Links</h4>
-            <ul className="flex flex-col gap-3.5">
+            <h4 className="footer-column-title text-lg font-bold text-text-primary mb-6 relative pb-3 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-10 after:h-0.5 after:bg-gradient-to-r after:from-accent after:to-transparent">Quick Links</h4>
+            <ul className="footer-links flex flex-col gap-3.5">
               {['Home', 'About Us', 'Projects', 'Services', 'Blog', 'Contact'].map((item) => (
                 <li key={item}>
                   <Link href={`/${item.toLowerCase().replace(' ', '-')}`} className="text-text-secondary text-[0.9375rem] transition-all duration-300 hover:text-accent hover:pl-5 relative group">
@@ -73,8 +74,8 @@ export default function Footer() {
           
           {/* Services */}
           <div>
-            <h4 className="text-lg font-bold text-text-primary mb-6 relative pb-3 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-10 after:h-0.5 after:bg-gradient-to-r after:from-accent after:to-transparent">Services</h4>
-            <ul className="flex flex-col gap-3.5">
+            <h4 className="footer-column-title text-lg font-bold text-text-primary mb-6 relative pb-3 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-10 after:h-0.5 after:bg-gradient-to-r after:from-accent after:to-transparent">Services</h4>
+            <ul className="footer-links flex flex-col gap-3.5">
               {['Web Development', 'Mobile Apps', 'UI/UX Design', 'API Development', 'Consulting', 'Maintenance'].map((item) => (
                 <li key={item}>
                   <Link href="/services" className="text-text-secondary text-[0.9375rem] transition-all duration-300 hover:text-accent hover:pl-5 relative group">
@@ -88,8 +89,8 @@ export default function Footer() {
           
           {/* Resources */}
           <div>
-             <h4 className="text-lg font-bold text-text-primary mb-6 relative pb-3 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-10 after:h-0.5 after:bg-gradient-to-r after:from-accent after:to-transparent">Resources</h4>
-             <ul className="flex flex-col gap-3.5">
+             <h4 className="footer-column-title text-lg font-bold text-text-primary mb-6 relative pb-3 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-10 after:h-0.5 after:bg-gradient-to-r after:from-accent after:to-transparent">Resources</h4>
+             <ul className="footer-links flex flex-col gap-3.5">
                {['Documentation', 'Tutorials', 'Case Studies', 'FAQ', 'Privacy Policy', 'Terms'].map((item) => (
                  <li key={item}>
                    <a href="#" className="text-text-secondary text-[0.9375rem] transition-all duration-300 hover:text-accent hover:pl-5 relative group">
@@ -103,38 +104,22 @@ export default function Footer() {
           
           {/* Newsletter */}
           <div className="lg:col-span-1 max-w-sm">
-            <h4 className="text-lg font-bold text-text-primary mb-6 relative pb-3 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-10 after:h-0.5 after:bg-gradient-to-r after:from-accent after:to-transparent">Stay Updated</h4>
-            <p className="text-text-secondary text-sm leading-relaxed mb-6">
+            <h4 className="footer-column-title text-lg font-bold text-text-primary mb-6 relative pb-3 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-10 after:h-0.5 after:bg-gradient-to-r after:from-accent after:to-transparent">Stay Updated</h4>
+            <p className="newsletter-description text-text-secondary text-sm leading-relaxed mb-6">
               Subscribe to our newsletter for latest updates, tips, and exclusive offers.
             </p>
-            <form className="mb-8 relative">
-              <div className="relative mb-4">
-                <input 
-                  type="email" 
-                  placeholder="Enter your email" 
-                  className="w-full pl-5 pr-14 py-3.5 bg-[rgba(17,34,64,0.6)] backdrop-blur-md border border-[rgba(100,255,218,0.2)] rounded-xl text-text-primary text-[0.9375rem] outline-none transition-all focus:bg-[rgba(17,34,64,0.8)] focus:border-accent focus:shadow-[0_0_0_3px_rgba(100,255,218,0.1)] placeholder:text-[#495670]"
-                  required
-                />
-                <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-gradient-to-br from-accent to-[#00d4ff] text-[#0a192f] rounded-lg hover:scale-105 hover:shadow-[0_4px_16px_rgba(100,255,218,0.4)] transition-all duration-300">
-                  <Send size={18} />
-                </button>
-              </div>
-              <label className="flex items-center gap-2 text-text-secondary text-xs cursor-pointer">
-                <input type="checkbox" className="w-4 h-4 rounded cursor-pointer accent-accent" required />
-                <span>I agree to receive marketing emails</span>
-              </label>
-            </form>
+            <NewsletterForm />
             
             <div className="flex flex-col gap-4">
-              <div className="flex items-center gap-3 text-text-secondary text-sm group">
+              <div className="contact-item flex items-center gap-3 text-text-secondary text-sm group">
                 <Mail size={18} className="text-accent flex-shrink-0" />
                 <a href="mailto:info@appogealtechlabs.com" className="hover:text-accent transition-colors">info@appogealtechlabs.com</a>
               </div>
-              <div className="flex items-center gap-3 text-text-secondary text-sm group">
+              <div className="contact-item flex items-center gap-3 text-text-secondary text-sm group">
                 <Phone size={18} className="text-accent flex-shrink-0" />
                 <a href="tel:+254700000000" className="hover:text-accent transition-colors">+254 700 000 000</a>
               </div>
-              <div className="flex items-center gap-3 text-text-secondary text-sm">
+              <div className="contact-item flex items-center gap-3 text-text-secondary text-sm">
                 <MapPin size={18} className="text-accent flex-shrink-0" />
                 <span>Nairobi, Kenya</span>
               </div>
@@ -144,8 +129,8 @@ export default function Footer() {
         </div>
         
         {/* Middle Status */}
-        <div className="flex flex-col md:flex-row justify-between items-center p-8 mb-12 bg-[rgba(17,34,64,0.4)] backdrop-blur-md border border-[rgba(100,255,218,0.2)] rounded-[20px] gap-6 text-center md:text-left">
-          <div className="flex items-center gap-3 text-text-primary font-semibold">
+        <div className="footer-status-bar flex flex-col md:flex-row justify-between items-center p-8 mb-12 backdrop-blur-md border rounded-[20px] gap-6 text-center md:text-left">
+          <div className="flex items-center gap-3 font-semibold">
             <div className="w-3 h-3 rounded-full bg-[#10b981] shadow-[0_0_0_0_rgba(16,185,129,0.7)] animate-[statusPulse_2s_infinite]"></div>
             <span>Currently Available for New Projects</span>
           </div>

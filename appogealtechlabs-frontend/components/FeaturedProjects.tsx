@@ -44,7 +44,7 @@ export default function FeaturedProjects() {
             className="group relative bg-[rgba(17,34,64,0.7)] backdrop-blur-xl border border-[rgba(100,255,218,0.12)] rounded-[20px] overflow-hidden transition-all duration-400 hover:-translate-y-3 hover:border-[rgba(100,255,218,0.3)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.4)]"
           >
             {/* Image Section */}
-            <div className="relative h-[250px] overflow-hidden bg-gradient-to-br from-[#112240] to-[#1d3557]">
+            <div className="project-card-image relative h-[250px] overflow-hidden">
               {project.cover_image ? (
                 <Image
                   src={project.cover_image}

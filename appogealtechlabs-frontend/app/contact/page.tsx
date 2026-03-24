@@ -41,7 +41,7 @@ export default function ContactPage() {
   };
 
   return (
-    <section className="min-h-screen py-32 px-6 lg:px-8 relative bg-[linear-gradient(180deg,#0a192f_0%,#112240_50%,#0a192f_100%)]">
+    <section className="contact-section min-h-screen py-32 px-6 lg:px-8 relative">
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[rgba(100,255,218,0.05)] rounded-full blur-[100px] pointer-events-none translate-x-1/3 -translate-y-1/3"></div>
 
@@ -60,8 +60,8 @@ export default function ContactPage() {
           </p>
 
           <div className="space-y-8 mb-12">
-            <div className="flex items-start gap-6 group">
-              <div className="w-14 h-14 flex items-center justify-center rounded-2xl bg-[rgba(17,34,64,0.6)] border border-[rgba(100,255,218,0.2)] text-accent group-hover:bg-accent group-hover:text-bg-primary transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.2)]">
+            <div className="contact-info-item flex items-start gap-6 group">
+              <div className="contact-icon-wrapper w-14 h-14 flex items-center justify-center rounded-2xl bg-[rgba(17,34,64,0.6)] border border-[rgba(100,255,218,0.2)] text-accent group-hover:bg-accent group-hover:text-bg-primary transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.2)]">
                 <Mail size={24} />
               </div>
               <div>
@@ -71,8 +71,8 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="flex items-start gap-6 group">
-              <div className="w-14 h-14 flex items-center justify-center rounded-2xl bg-[rgba(17,34,64,0.6)] border border-[rgba(100,255,218,0.2)] text-accent group-hover:bg-accent group-hover:text-bg-primary transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.2)]">
+            <div className="contact-info-item flex items-start gap-6 group">
+              <div className="contact-icon-wrapper w-14 h-14 flex items-center justify-center rounded-2xl bg-[rgba(17,34,64,0.6)] border border-[rgba(100,255,218,0.2)] text-accent group-hover:bg-accent group-hover:text-bg-primary transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.2)]">
                 <MapPin size={24} />
               </div>
               <div>
@@ -82,8 +82,8 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="flex items-start gap-6 group">
-              <div className="w-14 h-14 flex items-center justify-center rounded-2xl bg-[rgba(17,34,64,0.6)] border border-[rgba(100,255,218,0.2)] text-accent group-hover:bg-accent group-hover:text-bg-primary transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.2)]">
+            <div className="contact-info-item flex items-start gap-6 group">
+              <div className="contact-icon-wrapper w-14 h-14 flex items-center justify-center rounded-2xl bg-[rgba(17,34,64,0.6)] border border-[rgba(100,255,218,0.2)] text-accent group-hover:bg-accent group-hover:text-bg-primary transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.2)]">
                 <Phone size={24} />
               </div>
               <div>
@@ -96,7 +96,7 @@ export default function ContactPage() {
         </div>
 
         {/* Contact Form */}
-        <div className="bg-[rgba(17,34,64,0.7)] backdrop-blur-xl border border-[rgba(100,255,218,0.12)] rounded-[28px] p-8 md:p-10 shadow-[0_16px_48px_rgba(0,0,0,0.4)] animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
+        <div className="contact-card bg-[rgba(17,34,64,0.7)] backdrop-blur-xl border border-[rgba(100,255,218,0.12)] rounded-[28px] p-8 md:p-10 shadow-[0_16px_48px_rgba(0,0,0,0.4)] animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
           
           {status === 'success' ? (
             <div className="text-center py-16">
@@ -118,7 +118,7 @@ export default function ContactPage() {
             <form onSubmit={handleSubmit}>
               <div className="grid md:grid-cols-2 gap-6 mb-6">
                 <div className="form-group">
-                  <label htmlFor="name" className="block text-[#e6f1ff] text-[0.9375rem] font-semibold mb-2">
+                  <label htmlFor="name" className="form-label block text-[#e6f1ff] text-[0.9375rem] font-semibold mb-2">
                     Name <span className="text-red-500 ml-1">*</span>
                   </label>
                   <input
@@ -128,12 +128,12 @@ export default function ContactPage() {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-5 py-3.5 bg-[rgba(17,34,64,0.6)] backdrop-blur-md border border-[rgba(100,255,218,0.2)] rounded-xl text-[#e6f1ff] text-base outline-none transition-all focus:bg-[rgba(17,34,64,0.8)] focus:border-accent focus:shadow-[0_0_0_3px_rgba(100,255,218,0.1)] placeholder:text-[#495670]"
-                    placeholder="John Doe"
+                    className="form-input w-full px-5 py-3.5 bg-[rgba(17,34,64,0.6)] backdrop-blur-md border border-[rgba(100,255,218,0.2)] rounded-xl text-[#e6f1ff] text-base outline-none transition-all focus:bg-[rgba(17,34,64,0.8)] focus:border-accent focus:shadow-[0_0_0_3px_rgba(100,255,218,0.1)] placeholder:text-[#495670]"
+                    placeholder="Harry Potter"
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="email" className="block text-[#e6f1ff] text-[0.9375rem] font-semibold mb-2">
+                  <label htmlFor="email" className="form-label block text-[#e6f1ff] text-[0.9375rem] font-semibold mb-2">
                     Email <span className="text-red-500 ml-1">*</span>
                   </label>
                   <input
@@ -143,14 +143,14 @@ export default function ContactPage() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-5 py-3.5 bg-[rgba(17,34,64,0.6)] backdrop-blur-md border border-[rgba(100,255,218,0.2)] rounded-xl text-[#e6f1ff] text-base outline-none transition-all focus:bg-[rgba(17,34,64,0.8)] focus:border-accent focus:shadow-[0_0_0_3px_rgba(100,255,218,0.1)] placeholder:text-[#495670]"
-                    placeholder="john@example.com"
+                    className="form-input w-full px-5 py-3.5 bg-[rgba(17,34,64,0.6)] backdrop-blur-md border border-[rgba(100,255,218,0.2)] rounded-xl text-[#e6f1ff] text-base outline-none transition-all focus:bg-[rgba(17,34,64,0.8)] focus:border-accent focus:shadow-[0_0_0_3px_rgba(100,255,218,0.1)] placeholder:text-[#495670]"
+                    placeholder="harry@example.com"
                   />
                 </div>
               </div>
 
               <div className="form-group mb-6">
-                <label htmlFor="subject" className="block text-[#e6f1ff] text-[0.9375rem] font-semibold mb-2">
+                <label htmlFor="subject" className="form-label block text-[#e6f1ff] text-[0.9375rem] font-semibold mb-2">
                   Subject
                 </label>
                 {/* Custom SVG arrow background is tricky with Tailwind arbitrary values for background-image string escaping. 
@@ -161,7 +161,7 @@ export default function ContactPage() {
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    className="w-full px-5 py-3.5 bg-[rgba(17,34,64,0.6)] backdrop-blur-md border border-[rgba(100,255,218,0.2)] rounded-xl text-[#e6f1ff] text-base outline-none transition-all focus:bg-[rgba(17,34,64,0.8)] focus:border-accent focus:shadow-[0_0_0_3px_rgba(100,255,218,0.1)] appearance-none cursor-pointer pr-12"
+                    className="form-select w-full px-5 py-3.5 bg-[rgba(17,34,64,0.6)] backdrop-blur-md border border-[rgba(100,255,218,0.2)] rounded-xl text-[#e6f1ff] text-base outline-none transition-all focus:bg-[rgba(17,34,64,0.8)] focus:border-accent focus:shadow-[0_0_0_3px_rgba(100,255,218,0.1)] appearance-none cursor-pointer pr-12"
                   >
                     <option value="General Inquiry" className="bg-[#112240] text-[#e6f1ff] py-2">General Inquiry</option>
                     <option value="Project Proposal" className="bg-[#112240] text-[#e6f1ff] py-2">Project Proposal</option>
@@ -177,7 +177,7 @@ export default function ContactPage() {
               </div>
 
               <div className="form-group mb-6">
-                <label htmlFor="message" className="block text-[#e6f1ff] text-[0.9375rem] font-semibold mb-2">
+                <label htmlFor="message" className="form-label block text-[#e6f1ff] text-[0.9375rem] font-semibold mb-2">
                   Message <span className="text-red-500 ml-1">*</span>
                 </label>
                 <textarea
@@ -187,7 +187,7 @@ export default function ContactPage() {
                   onChange={handleChange}
                   required
                   rows={5}
-                  className="w-full px-5 py-3.5 bg-[rgba(17,34,64,0.6)] backdrop-blur-md border border-[rgba(100,255,218,0.2)] rounded-xl text-[#e6f1ff] text-base font-sans outline-none transition-all focus:bg-[rgba(17,34,64,0.8)] focus:border-accent focus:shadow-[0_0_0_3px_rgba(100,255,218,0.1)] resize-y placeholder:text-[#495670]"
+                  className="form-textarea w-full px-5 py-3.5 bg-[rgba(17,34,64,0.6)] backdrop-blur-md border border-[rgba(100,255,218,0.2)] rounded-xl text-[#e6f1ff] text-base font-sans outline-none transition-all focus:bg-[rgba(17,34,64,0.8)] focus:border-accent focus:shadow-[0_0_0_3px_rgba(100,255,218,0.1)] resize-y placeholder:text-[#495670]"
                   placeholder="Tell us about your project..."
                 />
               </div>

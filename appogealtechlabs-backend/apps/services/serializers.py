@@ -7,7 +7,7 @@ class ServicePackageSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = ServicePackage
-        fields = ['id', 'tier', 'tier_display', 'price', 'timeline_days', 'features', 'is_popular']
+        fields = ['id', 'tier', 'tier_display', 'price', 'timeline_days', 'features', 'is_popular', 'description']
 
 
 class ServiceSerializer(serializers.ModelSerializer):

@@ -46,8 +46,9 @@ class ServicePackage(TimeStampedModel):
     timeline_days = models.PositiveIntegerField(
         help_text="Estimated delivery time in days"
     )
+    description = models.TextField(blank=True, help_text="Short description of the package")
     features = models.JSONField(
-        help_text='List of features: ["Feature 1", "Feature 2"]'
+        help_text='List of features to display. Structure: [{"text": "Feature Name", "included": true/false}]'
     )
     is_popular = models.BooleanField(default=False)
     

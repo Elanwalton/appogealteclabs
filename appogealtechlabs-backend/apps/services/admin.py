@@ -20,4 +20,4 @@ class ServiceAdmin(admin.ModelAdmin):
 class ServicePackageAdmin(admin.ModelAdmin):
     list_display = ['service', 'tier', 'price', 'timeline_days', 'is_popular']
     list_filter = ['tier', 'is_popular', 'service']
-    search_fields = ['service__name']
+    search_fields = ['service__name', 'description']
