@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
 export const api = axios.create({
   baseURL: API_URL,
@@ -11,20 +11,20 @@ export const api = axios.create({
 
 // API endpoints
 export const endpoints = {
-  techStack: '/tech-stack/',
-  projects: '/projects/',
-  services: '/services/',
-  testimonials: '/testimonials/',
-  contact: '/contact/',
+  techStack: '/tech-stack',
+  projects: '/projects',
+  services: '/services',
+  testimonials: '/testimonials',
+  contact: '/inquiries',
   blog: {
-    posts: '/blog/posts/',
-    categories: '/blog/categories/',
-    tags: '/blog/tags/',
+    posts: '/blog/posts',
+    categories: '/blog/categories',
+    tags: '/blog/tags',
   },
   newsletter: {
-    subscribe: '/newsletter/subscribe/',
+    subscribe: '/newsletter/subscribe',
   },
-  calculator: '/calculator/options/',
+  calculator: '/calculator/options',
 };
 
 export default api;
