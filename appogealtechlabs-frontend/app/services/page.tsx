@@ -31,36 +31,20 @@ const getIcon = (tier: string) => {
   }
 };
 
-const faqItems = [
-  {
-    question: "What's included in the support period?",
-    answer: "Support includes bug fixes, minor updates, technical assistance, and guidance on using your new platform. We're here to ensure your success!"
-  },
-  {
-    question: "Can I upgrade my plan later?",
-    answer: "Absolutely! You can upgrade to a higher tier at any time. We'll credit your previous payment toward the upgrade."
-  },
-  {
-    question: "Do you offer custom solutions?",
-    answer: "Yes! If our standard plans don't fit your needs, we can create a custom quote tailored specifically to your requirements."
-  },
-  {
-    question: "What technologies do you use?",
-    answer: "We primarily use Next.js for frontend, Django for backend, PostgreSQL for databases, and deploy on platforms like Vercel and Railway for optimal performance."
-  }
-];
+// FAQs are now fetched from backend via API
 
 export default function ServicesPage() {
   const [billingCycle, setBillingCycle] = useState<'one-time' | 'retainer'>('one-time');
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
   const [pricingPlans, setPricingPlans] = useState<ServicePackage[]>([]);
+  const [faqItems, setFaqItems] = useState<any[]>([]);
+  const [popularProjects, setPopularProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        // Fetch the specific service wrapper we created
-        const response = await api.get(`${endpoints.services}web-application-development/`);
+        const response = await api.get(`${endpoints.services}/web-application-development`);
         const packages = response.data.packages.map((pkg: any) => ({
           ...pkg,
           icon: getIcon(pkg.tier)
@@ -72,7 +56,28 @@ export default function ServicesPage() {
         setLoading(false);
       }
     };
+    
+    const fetchFaqs = async () => {
+      try {
+        const response = await api.get(`${endpoints.faqs}?category=services`);
+        setFaqItems(response.data);
+      } catch (error) {
+        console.error('Failed to fetch FAQs:', error);
+      }
+    };
+    
+    const fetchPopular = async () => {
+      try {
+        const response = await api.get(endpoints.popularProjects);
+        setPopularProjects(response.data);
+      } catch (error) {
+        console.error('Failed to fetch popular projects:', error);
+      }
+    };
+
     fetchServices();
+    fetchFaqs();
+    fetchPopular();
   }, []);
 
   const toggleFaq = (index: number) => {
@@ -156,7 +161,7 @@ export default function ServicesPage() {
               <div className="flex items-baseline justify-center mb-6">
                 <span className="text-xl font-semibold text-text-secondary mr-1">KSh</span>
                 <span className="price-amount text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-[#e6f1ff] to-accent">
-                  {parseInt(plan.price).toLocaleString()}
+                  {plan.price}
                 </span>
                 <span className="text-text-secondary ml-2">/project</span>
               </div>
@@ -195,6 +200,40 @@ export default function ServicesPage() {
               </button>
             </div>
           ))}
+        </div>
+
+        {/* Top 10 Requested Projects */}
+        <div className="mb-24">
+          <div className="text-center mb-12 animate-fadeInUp">
+            <span className="inline-block px-5 py-2 bg-[rgba(100,255,218,0.1)] border border-[rgba(100,255,218,0.3)] rounded-[20px] text-accent text-sm font-semibold uppercase tracking-[0.1em] mb-4">
+              Client Favorites
+            </span>
+            <h3 className="text-4xl font-bold bg-gradient-to-br from-[#e6f1ff] to-accent bg-clip-text text-transparent">Top 10 Most Requested Projects</h3>
+            <p className="text-text-secondary mt-6 max-w-2xl mx-auto text-lg">
+              Are you looking for a standard solution? Here are the platforms our clients bring to us most frequently, complete with approximate baseline prices to help you start budgeting.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            {popularProjects.map((project, index) => (
+              <div key={project.id || index} className="p-8 bg-[rgba(17,34,64,0.6)] backdrop-blur-xl border border-[rgba(100,255,218,0.15)] rounded-2xl hover:border-accent hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
+                <div>
+                  <div className="flex justify-between items-start mb-4">
+                    <h4 className="text-xl font-bold text-text-primary group-hover:text-accent transition-colors leading-tight pr-4">{project.name}</h4>
+                    <span className="px-3 py-1.5 bg-[rgba(100,255,218,0.05)] border border-[rgba(100,255,218,0.2)] text-accent text-sm font-mono rounded-lg whitespace-nowrap tracking-wide">
+                      {project.approximate_price}
+                    </span>
+                  </div>
+                  <p className="text-text-secondary text-base leading-relaxed">{project.description}</p>
+                </div>
+                <div className="mt-8 pt-5 border-t border-[rgba(100,255,218,0.1)]">
+                   <Link href="/contact" className="text-accent text-[0.9375rem] font-semibold flex items-center gap-2 hover:gap-3 transition-all tracking-wide uppercase">
+                      Request this build <ArrowRight size={16} />
+                   </Link>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Feature Comparison Table */}

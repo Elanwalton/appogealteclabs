@@ -63,6 +63,17 @@ router.get('/posts', async (req, res) => {
   }
 });
 
+// GET /api/blog/posts/id/:id  (admin — fetch by Firestore doc ID)
+router.get('/posts/id/:id', async (req, res) => {
+  try {
+    const doc = await db.collection('posts').doc(req.params.id).get();
+    if (!doc.exists) return res.status(404).json({ error: 'Post not found.' });
+    res.json({ id: doc.id, ...doc.data() });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // GET /api/blog/posts/:slug
 router.get('/posts/:slug', async (req, res) => {
   try {
@@ -87,11 +98,12 @@ router.post('/posts', authenticate, requireAdmin, async (req, res) => {
     const slug = slugify(title);
     const newPost = {
       title, slug, excerpt, content, image: image || null,
+      focus_keyword: focus_keyword || null,
       category_slug: category_slug || null, category_name: category_name || null,
       tags: tags || [],
       author_uid: req.user.uid, author_email: req.user.email,
       featured: featured || false, read_time: read_time || 0,
-      views: 0, is_active: true,
+      views: 0, is_active: is_active !== undefined ? is_active : true,
       published_at: new Date().toISOString(), updated_at: new Date().toISOString(),
     };
     const ref = await db.collection('posts').add(newPost);

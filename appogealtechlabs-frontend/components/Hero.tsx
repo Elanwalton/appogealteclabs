@@ -2,11 +2,14 @@
 
 import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ChevronDown, ArrowRight, Code, Database, Cloud, MessageCircle } from 'lucide-react';
-import { useEffect, useRef } from 'react';
+import { ChevronDown, ArrowRight, Code, Database, Cloud, MessageCircle, Smartphone, Server, FileCode } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 import Globe from '@/components/Globe';
 
 export default function Hero() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   const targetRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: targetRef,
@@ -30,7 +33,7 @@ export default function Hero() {
         
         {/* Particles Container (Simplified CSS implementation) */}
         <div className="absolute inset-0 pointer-events-none">
-           {[...Array(20)].map((_, i) => (
+           {mounted && [...Array(20)].map((_, i) => (
              <div 
                key={i}
                className="particle absolute w-1 h-1 bg-[radial-gradient(circle,#64ffda,transparent)] rounded-full animate-[float_4s_ease-in-out_infinite]"
@@ -96,16 +99,19 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="flex flex-wrap gap-5 mb-12"
+            className="flex flex-wrap gap-6 mb-12"
           >
-            <button className="btn-primary px-8 py-3.5 bg-gradient-to-br from-accent to-[#00d4ff] text-bg-primary text-lg font-semibold rounded-xl shadow-[0_4px_16px_rgba(100,255,218,0.3)] hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(100,255,218,0.5)] transition-all duration-300 relative overflow-hidden group flex items-center gap-3">
-              View Our Work
-              <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-            </button>
-            <button className="btn-secondary px-8 py-3.5 bg-transparent border-2 border-accent text-accent text-lg font-semibold rounded-xl hover:bg-accent/10 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(100,255,218,0.2)] transition-all duration-300 flex items-center gap-3">
+            <Link href="/projects" className="relative group inline-block">
+              <div className="absolute -inset-1 bg-gradient-to-r from-accent via-[#00d4ff] to-purple-500 rounded-xl blur opacity-30 group-hover:opacity-100 transition duration-500 group-hover:duration-200"></div>
+              <button className="relative px-8 py-4 bg-bg-primary border border-accent/50 text-accent text-lg font-bold rounded-xl flex items-center gap-3 transition-all duration-300 group-hover:-translate-y-1">
+                View Our Work
+                <ArrowRight size={22} className="group-hover:translate-x-2 transition-transform duration-300" />
+              </button>
+            </Link>
+            <Link href="/contact" className="px-8 py-4 bg-transparent border-2 border-gray-700 text-text-primary text-lg font-semibold rounded-xl hover:bg-gray-800 hover:border-text-secondary transition-all duration-300 flex items-center gap-3">
               Get In Touch
-              <MessageCircle size={20} />
-            </button>
+              <MessageCircle size={22} />
+            </Link>
           </motion.div>
 
           <motion.div 
@@ -146,7 +152,7 @@ export default function Hero() {
             </div>
 
             {/* Orbiting Icons */}
-            {/* React */}
+            {/* React & React Native */}
             <motion.div 
               animate={{ rotate: 360 }}
               transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
@@ -155,9 +161,12 @@ export default function Hero() {
                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0f172a] p-2 rounded-full border border-accent/20">
                   <Code className="text-accent" size={24} />
                </div>
+               <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 bg-[#0f172a] p-2 rounded-full border border-accent/20">
+                  <Smartphone className="text-purple-400" size={24} />
+               </div>
             </motion.div>
 
-            {/* Django */}
+            {/* Django & PHP */}
             <motion.div 
               animate={{ rotate: -360 }}
               transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
@@ -166,9 +175,12 @@ export default function Hero() {
                <div className="absolute bottom-0 right-1/2 translate-x-1/2 translate-y-1/2 bg-[#0f172a] p-2 rounded-full border border-accent/20">
                   <Database className="text-green-500" size={24} />
                </div>
+               <div className="absolute top-0 right-1/2 translate-x-1/2 -translate-y-1/2 bg-[#0f172a] p-2 rounded-full border border-accent/20">
+                  <FileCode className="text-blue-500" size={24} />
+               </div>
             </motion.div>
 
-             {/* Cloud/Docker */}
+             {/* Cloud & Express */}
             <motion.div 
               animate={{ rotate: 360 }}
               transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
@@ -176,6 +188,9 @@ export default function Hero() {
             >
                <div className="absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2 bg-[#0f172a] p-2 rounded-full border border-accent/20">
                   <Cloud className="text-blue-400" size={24} />
+               </div>
+               <div className="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 bg-[#0f172a] p-2 rounded-full border border-accent/20">
+                  <Server className="text-yellow-400" size={24} />
                </div>
             </motion.div>
 
@@ -202,6 +217,30 @@ export default function Hero() {
               className="absolute top-[30%] right-[5%] px-4 py-2 bg-bg-secondary/80 backdrop-blur border border-accent/20 rounded-lg text-sm font-mono text-blue-300 z-20"
             >
               Next.js
+            </motion.div>
+
+             <motion.div 
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+              className="absolute bottom-[20%] left-[5%] px-4 py-2 bg-bg-secondary/80 backdrop-blur border border-accent/20 rounded-lg text-sm font-mono text-purple-300 z-20"
+            >
+              React Native
+            </motion.div>
+
+             <motion.div 
+              animate={{ y: [0, -15, 0] }}
+              transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+              className="absolute top-[60%] left-[2%] px-4 py-2 bg-bg-secondary/80 backdrop-blur border border-accent/20 rounded-lg text-sm font-mono text-blue-500 z-20"
+            >
+              PHP
+            </motion.div>
+
+             <motion.div 
+              animate={{ y: [0, 12, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2.5 }}
+              className="absolute top-[80%] right-[30%] px-4 py-2 bg-bg-secondary/80 backdrop-blur border border-accent/20 rounded-lg text-sm font-mono text-yellow-300 z-20"
+            >
+              Express
             </motion.div>
 
           </div>

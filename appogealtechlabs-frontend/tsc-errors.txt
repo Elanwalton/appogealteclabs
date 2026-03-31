@@ -1,0 +1,2 @@
+.next/dev/types/validator.ts(132,39): error TS2306: File 'C:/Users/user/Desktop/Appogealtechlabs.com/appogealtechlabs-frontend/app/services/calculator/page.tsx' is not a module.
+.next/types/validator.ts(168,39): error TS2306: File 'C:/Users/user/Desktop/Appogealtechlabs.com/appogealtechlabs-frontend/app/services/calculator/page.tsx' is not a module.

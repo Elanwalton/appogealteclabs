@@ -38,7 +38,7 @@ export default function DashboardPage() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-4">
           <div>
             <h1 className="text-3xl font-bold text-text-primary">Client Portal</h1>
-            <p className="text-text-secondary mt-1">Welcome back, {user.first_name || user.username}!</p>
+            <p className="text-text-secondary mt-1">Welcome back, {user.displayName || user.email}!</p>
           </div>
           <button 
             onClick={logout}
@@ -66,7 +66,7 @@ export default function DashboardPage() {
               <CreditCard size={24} />
             </div>
             <h3 className="text-lg font-bold text-text-primary mb-1">Invoices Due</h3>
-            <p className="text-3xl font-bold text-purple-500">$0.00</p>
+            <p className="text-3xl font-bold text-purple-500">Ksh 0.00</p>
           </div>
 
           {/* Card 3 */}

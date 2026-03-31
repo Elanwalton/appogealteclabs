@@ -76,14 +76,40 @@ export const metadata: Metadata = {
 
 
 
+import Script from 'next/script';
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'AppogealTechLabs',
+    url: 'https://appogealtechlabs.com',
+    logo: 'https://appogealtechlabs.com/og-image.jpg',
+    description: 'Cutting-edge web development agency specializing in Next.js, Node.js, and modern digital solutions.',
+    sameAs: [
+      'https://twitter.com/appogealtech',
+      'https://linkedin.com/company/appogealtechlabs'
+    ],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone: '+254700000000',
+      contactType: 'customer service',
+      email: 'hello@appogealtechlabs.com'
+    }
+  };
+
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} ${poppins.variable} ${firaCode.variable} font-sans bg-bg-primary text-text-primary antialiased selection:bg-accent selection:text-bg-primary`}>
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+      <body className={`${inter.variable} ${poppins.variable} ${firaCode.variable} font-sans bg-bg-primary text-text-primary antialiased selection:bg-accent selection:text-bg-primary`} suppressHydrationWarning>
+        <Script
+          id="org-jsonld"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <ThemeProvider>
           <AuthProvider>
             <Navbar />

@@ -29,7 +29,7 @@ interface Client {
 }
 
 interface Feature {
-  icon: React.ReactNode;
+  icon: string | React.ReactNode;
   title: string;
   description: string;
 }
@@ -104,224 +104,49 @@ interface Project {
 }
 
 
-// Mock Data Function
-const getProjectDetails = (slug: string): Project => {
-  // In a real app, verify slug matches content
-  return {
-    id: 1,
-    title: "TechFlow Solutions - Custom ERP System",
-    slug: "techflow-erp-system",
-    tagline: "Transforming business operations with a comprehensive enterprise resource planning solution",
-    client: {
-      name: "TechFlow Solutions",
-      industry: "Technology Services",
-      location: "Nairobi, Kenya",
-      logo: "/clients/techflow-logo.svg",
-      website: "https://techflowsolutions.co.ke"
-    },
-    category: "Enterprise Software",
-    tags: ["Django", "React", "PostgreSQL", "REST API", "Cloud Infrastructure"],
-    duration: "6 months",
-    teamSize: 5,
-    completedDate: "2025-12-15",
-    
-    // Hero Section
-    heroImage: "/projects/techflow-hero.jpg",
-    
-    // Project Overview
-    overview: "TechFlow Solutions needed a complete digital transformation to streamline their internal operations. We developed a comprehensive ERP system that integrates inventory management, customer relationship management, financial tracking, and automated reporting into one unified platform.",
-    
-    // Challenge
-    challenge: {
-      title: "The Challenge",
-      description: "TechFlow was struggling with disconnected systems, manual data entry, and lack of real-time visibility into their operations. Their existing infrastructure consisted of multiple standalone tools that didn't communicate with each other, leading to data inconsistencies and operational inefficiencies.",
-      problems: [
-        "Manual data entry across 5 different systems causing errors and delays",
-        "No centralized dashboard for management oversight",
-        "Inventory tracking done through spreadsheets leading to stock discrepancies",
-        "Customer data scattered across multiple platforms",
-        "Financial reporting taking up to 2 weeks to compile",
-        "No mobile access for field teams",
-        "Scalability issues with growing business needs"
-      ],
-      image: "/projects/techflow-challenge.jpg"
-    },
-    
-    // Solution
-    solution: {
-      title: "Our Solution",
-      description: "We designed and developed a custom cloud-based ERP system tailored to TechFlow's specific needs, providing a unified platform that automates workflows, centralizes data, and provides real-time insights.",
-      approach: [
-        {
-          title: "Discovery & Planning",
-          description: "Conducted extensive workshops with stakeholders to understand workflows, pain points, and requirements. Created detailed user personas and mapped out the entire business process.",
-          duration: "3 weeks"
-        },
-        {
-          title: "System Architecture Design",
-          description: "Designed a scalable microservices architecture using Django REST Framework for the backend, React for the frontend, and PostgreSQL for data management. Implemented Redis for caching and Celery for background tasks.",
-          duration: "2 weeks"
-        },
-        {
-          title: "Agile Development",
-          description: "Developed the system in 2-week sprints with continuous client feedback. Prioritized core features first: inventory management, CRM, and financial modules, then expanded to advanced analytics and automation.",
-          duration: "16 weeks"
-        },
-        {
-          title: "Testing & Quality Assurance",
-          description: "Comprehensive testing including unit tests, integration tests, and user acceptance testing. Performed load testing to ensure the system could handle peak usage.",
-          duration: "3 weeks"
-        },
-        {
-          title: "Training & Deployment",
-          description: "Provided comprehensive training for all user levels, created detailed documentation, and executed a phased rollout to minimize disruption. Offered 24/7 support during the transition period.",
-          duration: "2 weeks"
-        }
-      ],
-      features: [
-        {
-          icon: <Database />,
-          title: "Inventory Management",
-          description: "Real-time tracking of stock levels, automated reorder points, barcode scanning, and multi-warehouse support"
-        },
-        {
-          icon: <Users />,
-          title: "CRM System",
-          description: "Complete customer lifecycle management, sales pipeline tracking, automated follow-ups, and customer portal"
-        },
-        {
-          icon: <TrendingUp />,
-          title: "Financial Module",
-          description: "Automated invoicing, expense tracking, financial reporting, and integration with accounting software"
-        },
-        {
-          icon: <Target />,
-          title: "Analytics Dashboard",
-          description: "Real-time KPI tracking, customizable reports, predictive analytics, and data visualization"
-        },
-        {
-          icon: <Smartphone />,
-          title: "Mobile Access",
-          description: "Responsive design with dedicated mobile app for field teams to access and update data on the go"
-        },
-        {
-          icon: <Code />,
-          title: "API Integration",
-          description: "RESTful APIs for third-party integrations and future extensibility"
-        }
-      ],
-      images: [
-        "/projects/techflow-dashboard.jpg",
-        "/projects/techflow-inventory.jpg",
-        "/projects/techflow-crm.jpg",
-        "/projects/techflow-analytics.jpg"
-      ]
-    },
-    
-    // Tech Stack
-    techStack: {
-      frontend: ["React 18", "Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion", "Chart.js"],
-      backend: ["Django 4.2", "Django REST Framework", "Celery", "Redis", "PostgreSQL"],
-      infrastructure: ["AWS EC2", "AWS S3", "AWS RDS", "Nginx", "Docker", "GitHub Actions"],
-      tools: ["Figma", "Postman", "Jira", "Slack", "Git"]
-    },
-    
-    // Results
-    results: {
-      title: "The Results",
-      description: "The implementation of the custom ERP system transformed TechFlow's operations, delivering measurable improvements across all key metrics within the first three months of deployment.",
-      metrics: [
-        {
-          value: "87%",
-          label: "Reduction in Manual Data Entry",
-          description: "Automation eliminated most manual processes"
-        },
-        {
-          value: "2 hrs",
-          label: "Real-time Reporting",
-          description: "Down from 2 weeks for financial reports"
-        },
-        {
-          value: "99.5%",
-          label: "Inventory Accuracy",
-          description: "Up from 78% with spreadsheet system"
-        },
-        {
-          value: "3x",
-          label: "Faster Order Processing",
-          description: "Streamlined workflows and automation"
-        },
-        {
-          value: "45%",
-          label: "Increase in Productivity",
-          description: "Teams spending more time on value-added tasks"
-        },
-        {
-          value: "$180K",
-          label: "Annual Cost Savings",
-          description: "Through efficiency gains and reduced errors"
-        }
-      ],
-      outcomes: [
-        "Complete visibility into operations with real-time dashboards",
-        "Seamless data flow between all departments",
-        "Mobile access enabling remote work and field operations",
-        "Automated workflows reducing processing time by 70%",
-        "Scalable infrastructure supporting 300% business growth",
-        "Enhanced customer satisfaction with faster response times"
-      ],
-      image: "/projects/techflow-results.jpg"
-    },
-    
-    // Client Testimonial
-    testimonial: {
-      text: "Appogealtechlabs transformed our business. The ERP system they built exceeded our expectations in every way. We've seen dramatic improvements in efficiency, accuracy, and employee satisfaction. The team was professional, responsive, and truly understood our needs. This investment has already paid for itself multiple times over.",
-      author: {
-        name: "David Kimani",
-        position: "CEO",
-        company: "TechFlow Solutions",
-        avatar: "/testimonials/david-kimani.jpg"
-      },
-      rating: 5
-    },
-    
-    // Live Demo & Links
-    liveUrl: "https://erp.techflowsolutions.co.ke",
-    githubUrl: null, // Private project
-    
-    // Related Projects
-    relatedProjects: [
-      {
-        id: 2,
-        title: "Bloom Fashion - E-commerce Platform",
-        slug: "bloom-fashion-ecommerce",
-        image: "/projects/bloom-thumb.jpg",
-        category: "E-commerce",
-        tags: ["Next.js", "Stripe", "MongoDB"]
-      },
-      {
-        id: 3,
-        title: "FinEdge - Financial Dashboard",
-        slug: "finedge-financial-dashboard",
-        image: "/projects/finedge-thumb.jpg",
-        category: "FinTech",
-        tags: ["React", "D3.js", "Django"]
-      },
-      {
-        id: 4,
-        title: "Cargo Express - Logistics Platform",
-        slug: "cargo-express-logistics",
-        image: "/projects/cargo-thumb.jpg",
-        category: "Logistics",
-        tags: ["React Native", "Node.js", "PostgreSQL"]
-      }
-    ]
-  };
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+
+async function getProject(slug: string): Promise<Project | null> {
+  try {
+    const res = await fetch(`${API_URL}/projects/${slug}`, {
+      next: { revalidate: 60 },
+    });
+    if (!res.ok) return null;
+    return res.json();
+  } catch (error) {
+    console.error('Failed to fetch project:', error);
+    return null;
+  }
+}
+
+const getFeatureIcon = (iconName: string | any) => {
+  if (typeof iconName !== 'string') return iconName || <CheckCircle />;
+  switch (iconName) {
+    case 'Database': return <Database />;
+    case 'Users': return <Users />;
+    case 'TrendingUp': return <TrendingUp />;
+    case 'Target': return <Target />;
+    case 'Smartphone': return <Smartphone />;
+    case 'Code': return <Code />;
+    case 'Palette': return <Palette />;
+    case 'Award': return <Award />;
+    default: return <CheckCircle />;
+  }
 };
 
 export default async function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const project = getProjectDetails(slug);
+  const project = await getProject(slug);
+  
+  if (!project) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center p-8 text-center pt-32 pb-24">
+          <h1 className="text-4xl font-bold text-accent mb-4">Project Not Found</h1>
+          <p className="text-text-secondary mb-8">The project you are looking for does not exist or has been removed.</p>
+          <Link href="/projects" className="btn-primary">Back to Projects</Link>
+      </div>
+    );
+  }
   
   return (
     <div className="project-detail-page">
@@ -492,7 +317,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             <div className="features-grid">
               {project.solution.features.map((feature, index) => (
                 <div key={index} className="feature-card">
-                  <div className="feature-icon">{feature.icon}</div>
+                  <div className="feature-icon">{getFeatureIcon(feature.icon)}</div>
                   <h4 className="feature-title">{feature.title}</h4>
                   <p className="feature-description">{feature.description}</p>
                 </div>

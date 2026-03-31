@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import api, { endpoints } from '@/lib/api';
 
@@ -29,9 +30,12 @@ export default function ContactPage() {
     
     setStatus('submitting');
     try {
-      // Assuming endpoint exists, otherwise fallback to mock success for UI demo
-      // await api.post(endpoints.contact, formData);
-      await new Promise(resolve => setTimeout(resolve, 1500)); // Mock delay
+      await api.post(endpoints.contact, {
+        name: formData.name,
+        email: formData.email,
+        service: formData.subject,
+        message: formData.message
+      });
       setStatus('success');
       setFormData({ name: '', email: '', subject: 'General Inquiry', message: '', agreed: false });
     } catch (error) {
@@ -67,7 +71,7 @@ export default function ContactPage() {
               <div>
                 <h3 className="text-lg font-bold text-text-primary mb-1">Email Us</h3>
                 <p className="text-text-secondary mb-1">Our friendly team is here to help.</p>
-                <a href="mailto:hello@appogeal.com" className="text-accent hover:underline font-mono">hello@appogeal.com</a>
+                <a href="mailto:hello@appogealtechlabs.com" className="text-accent hover:underline font-mono">hello@appogealtechlabs.com</a>
               </div>
             </div>
 
@@ -204,7 +208,7 @@ export default function ContactPage() {
                     <CheckCircle className="absolute w-3.5 h-3.5 text-[#0a192f] left-1 top-1 opacity-0 peer-checked:opacity-100 pointer-events-none" />
                   </div>
                   <span className="text-[#8892b0] text-[0.9375rem] group-hover:text-text-primary transition-colors">
-                    I agree to the <a href="#" className="text-accent underline">Privacy Policy</a>
+                    I agree to the <Link href="/privacy-policy" className="text-accent underline">Privacy Policy</Link>
                   </span>
                 </label>
               </div>

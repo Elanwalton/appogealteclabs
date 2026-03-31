@@ -32,4 +32,27 @@ router.post('/unsubscribe', async (req, res) => {
   }
 });
 
+// GET /api/newsletter/subscribers — Admin: list all subscribers
+const { authenticate, requireAdmin } = require('../middleware/auth');
+router.get('/subscribers', authenticate, requireAdmin, async (req, res) => {
+  try {
+    const snapshot = await db.collection('newsletter').orderBy('subscribed_at', 'desc').get();
+    const subscribers = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    res.json(subscribers);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// DELETE /api/newsletter/subscribers/:id — Admin
+router.delete('/subscribers/:id', authenticate, requireAdmin, async (req, res) => {
+  try {
+    await db.collection('newsletter').doc(req.params.id).delete();
+    res.json({ message: 'Subscriber removed.' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;
+

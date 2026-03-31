@@ -1,4 +1,6 @@
 'use client';
+import { useState, useEffect } from 'react';
+import api, { endpoints } from '@/lib/api';
 
 import { 
   Users, 
@@ -19,81 +21,6 @@ import {
   Github
 } from 'lucide-react';
 
-const teamMembers = [
-  {
-    id: 1,
-    name: "David Omondi",
-    role: "Founder & CEO",
-    bio: "Full-stack developer with 8+ years of experience building scalable web applications. Passionate about creating solutions that make a difference.",
-    image: "/team/david-omondi.jpg",
-    skills: ["Leadership", "Full Stack", "Strategy"],
-    social: {
-      linkedin: "https://linkedin.com/in/davidomondi",
-      twitter: "https://twitter.com/davidomondi",
-      github: "https://github.com/davidomondi"
-    }
-  },
-  {
-    id: 2,
-    name: "Sarah Njeri",
-    role: "Lead UI/UX Designer",
-    bio: "Award-winning designer specializing in creating intuitive and beautiful user experiences that users love.",
-    image: "/team/sarah-njeri.jpg",
-    skills: ["UI/UX Design", "Figma", "User Research"],
-    social: {
-      linkedin: "https://linkedin.com/in/sarahnjeri",
-      twitter: "https://twitter.com/sarahnjeri"
-    }
-  },
-  {
-    id: 3,
-    name: "Michael Kamau",
-    role: "Senior Backend Developer",
-    bio: "Backend specialist with expertise in building robust APIs and optimizing database performance for high-traffic applications.",
-    image: "/team/michael-kamau.jpg",
-    skills: ["Django", "PostgreSQL", "API Design"],
-    social: {
-      linkedin: "https://linkedin.com/in/michaelkamau",
-      github: "https://github.com/michaelkamau"
-    }
-  },
-  {
-    id: 4,
-    name: "Grace Wangari",
-    role: "Frontend Developer",
-    bio: "React enthusiast focused on building fast, accessible, and delightful user interfaces with modern web technologies.",
-    image: "/team/grace-wangari.jpg",
-    skills: ["React", "Next.js", "TypeScript"],
-    social: {
-      linkedin: "https://linkedin.com/in/gracewangari",
-      github: "https://github.com/gracewangari"
-    }
-  },
-  {
-    id: 5,
-    name: "James Mwangi",
-    role: "Mobile Developer",
-    bio: "Cross-platform mobile developer creating seamless experiences for iOS and Android applications.",
-    image: "/team/james-mwangi.jpg",
-    skills: ["React Native", "Flutter", "Mobile UX"],
-    social: {
-      linkedin: "https://linkedin.com/in/jamesmwangi",
-      github: "https://github.com/jamesmwangi"
-    }
-  },
-  {
-    id: 6,
-    name: "Linda Akinyi",
-    role: "Project Manager",
-    bio: "Experienced project manager ensuring smooth delivery and client satisfaction on every project.",
-    image: "/team/linda-akinyi.jpg",
-    skills: ["Agile", "Client Relations", "Delivery"],
-    social: {
-      linkedin: "https://linkedin.com/in/lindaakinyi",
-      twitter: "https://twitter.com/lindaakinyi"
-    }
-  }
-];
 
 const values = [
   {
@@ -135,6 +62,20 @@ const stats = [
 ];
 
 export default function AboutUsPage() {
+  const [teamMembers, setTeamMembers] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchTeam = async () => {
+      try {
+        const response = await api.get(endpoints.team);
+        setTeamMembers(response.data);
+      } catch (error) {
+        console.error('Failed to load team:', error);
+      }
+    };
+    fetchTeam();
+  }, []);
+
   return (
     <div className="about-page">
       
@@ -225,7 +166,7 @@ export default function AboutUsPage() {
           </div>
           <div className="team-grid">
             {teamMembers.map((member) => (
-              <div key={member.id} className="team-card">
+              <div key={member.id || member.name} className="team-card">
                 <div className="team-card-image">
                   <img src={member.image} alt={member.name} />
                   <div className="team-overlay">
@@ -253,7 +194,7 @@ export default function AboutUsPage() {
                   <p className="team-role">{member.role}</p>
                   <p className="team-bio">{member.bio}</p>
                   <div className="team-skills">
-                    {member.skills.map((skill, index) => (
+                    {member.skills?.map((skill: string, index: number) => (
                       <span key={index} className="skill-tag">{skill}</span>
                     ))}
                   </div>

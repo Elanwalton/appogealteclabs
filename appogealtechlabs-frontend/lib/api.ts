@@ -16,6 +16,9 @@ export const endpoints = {
   services: '/services',
   testimonials: '/testimonials',
   contact: '/inquiries',
+  team: '/team',
+  faqs: '/faqs',
+  popularProjects: '/popular-projects',
   blog: {
     posts: '/blog/posts',
     categories: '/blog/categories',
@@ -25,6 +28,9 @@ export const endpoints = {
     subscribe: '/newsletter/subscribe',
   },
   calculator: '/calculator/options',
+  caseStudies: '/case-studies',
+  tutorials: '/tutorials',
+  documentation: '/documentation',
 };
 
 export default api;

@@ -63,9 +63,9 @@ export default function TestimonialsSlider() {
             <div className="relative z-10 flex flex-col md:flex-row gap-8 items-center">
                {/* Client Photo */}
                <div className="flex-shrink-0">
-                  {current.client_photo ? (
+                  {current.avatar ? (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <img src={current.client_photo} alt={current.client_name} className="w-24 h-24 rounded-full object-cover border-2 border-accent shadow-[0_0_20px_rgba(100,255,218,0.3)]" />
+                    <img src={current.avatar} alt={current.client_name} className="w-24 h-24 rounded-full object-cover border-2 border-accent shadow-[0_0_20px_rgba(100,255,218,0.3)]" />
                   ) : (
                     <div className="w-24 h-24 rounded-full bg-bg-tertiary flex items-center justify-center border-2 border-accent/50 text-accent shadow-[0_0_20px_rgba(100,255,218,0.1)]">
                       <User size={40} />
@@ -81,14 +81,14 @@ export default function TestimonialsSlider() {
                   </div>
                   
                   <blockquote className="text-xl md:text-2xl text-text-primary mb-6 italic leading-relaxed font-body">
-                    "{current.testimonial_text}"
+                    "{current.content}"
                   </blockquote>
 
                   <div>
                     <div className="font-bold text-text-primary text-lg">{current.client_name}</div>
                     <div className="text-sm text-text-secondary font-mono mt-1">
-                      {current.client_position}
-                      {current.company_name && <span className="text-accent"> @ {current.company_name}</span>}
+                      {current.client_title}
+                      {current.client_company && <span className="text-accent"> @ {current.client_company}</span>}
                     </div>
                   </div>
                </div>

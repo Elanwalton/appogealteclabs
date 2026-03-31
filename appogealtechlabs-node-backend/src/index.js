@@ -5,7 +5,10 @@ const cors = require('cors');
 const app = express();
 
 // --- Middleware ---
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:3000', 'https://appogealtechlabs.com', 'https://www.appogealtechlabs.com'],
+  credentials: true
+}));
 app.use(express.json());
 
 // --- Routes ---
@@ -16,7 +19,14 @@ app.use('/api/projects', require('./routes/projects'));
 app.use('/api/testimonials', require('./routes/testimonials'));
 app.use('/api/newsletter', require('./routes/newsletter'));
 app.use('/api/inquiries', require('./routes/inquiries'));
+app.use('/api/faqs', require('./routes/faqs'));
+app.use('/api/team', require('./routes/team'));
+app.use('/api/popular-projects', require('./routes/popular_projects'));
+app.use('/api/analytics', require('./routes/analytics'));
 app.use('/api/calculator', require('./routes/calculator'));
+app.use('/api/case-studies', require('./routes/case_studies'));
+app.use('/api/tutorials', require('./routes/tutorials'));
+app.use('/api/documentation', require('./routes/documentation'));
 
 // --- Health Check ---
 app.get('/api/health', (req, res) => res.json({ status: 'ok', timestamp: new Date().toISOString() }));

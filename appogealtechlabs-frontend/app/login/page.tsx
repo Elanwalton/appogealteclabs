@@ -2,12 +2,11 @@
 
 import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import api from '@/lib/api';
 import { Mail, Lock, Loader2, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
 
 export default function LoginPage() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -19,23 +18,29 @@ export default function LoginPage() {
     setError('');
 
     try {
-      const response = await api.post('/token/', { username, password });
-      login(response.data);
+      await login(email, password);
     } catch (err: any) {
       console.error('Login error:', err);
-      setError(err.response?.data?.detail || 'Failed to login. Please check your credentials.');
+      const code = err?.code || '';
+      if (code === 'auth/user-not-found' || code === 'auth/wrong-password' || code === 'auth/invalid-credential') {
+        setError('Invalid email or password. Please try again.');
+      } else if (code === 'auth/too-many-requests') {
+        setError('Too many failed attempts. Please wait a moment and try again.');
+      } else {
+        setError('Failed to sign in. Please check your credentials.');
+      }
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 bg-gradient-to-b from-bg-primary to-[#0a192f]">
-      <div className="w-full max-w-md bg-[rgba(17,34,64,0.8)] backdrop-blur-xl border border-[rgba(100,255,218,0.1)] rounded-2xl p-8 shadow-2xl">
-        
+    <div className="min-h-screen flex items-center justify-center p-6 bg-gradient-to-b from-bg-primary to-bg-secondary">
+      <div className="w-full max-w-md bg-bg-secondary border border-accent/20 rounded-2xl p-8 shadow-2xl">
+
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-text-primary mb-2">Welcome Back</h1>
-          <p className="text-text-secondary">Sign in to access your client portal</p>
+          <p className="text-text-secondary">Sign in to access your portal</p>
         </div>
 
         {error && (
@@ -47,15 +52,15 @@ export default function LoginPage() {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-text-secondary block">Username</label>
+            <label className="text-sm font-medium text-text-secondary block">Email</label>
             <div className="relative">
               <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted" size={20} />
               <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="w-full bg-[rgba(2,12,27,0.7)] border border-[rgba(100,255,218,0.1)] rounded-xl py-3 pl-12 pr-4 text-text-primary focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all"
-                placeholder="Enter your username"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full bg-bg-primary border border-accent/20 rounded-xl py-3 pl-12 pr-4 text-text-primary focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all"
+                placeholder="you@example.com"
                 required
               />
             </div>
@@ -69,7 +74,7 @@ export default function LoginPage() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-[rgba(2,12,27,0.7)] border border-[rgba(100,255,218,0.1)] rounded-xl py-3 pl-12 pr-4 text-text-primary focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all"
+                className="w-full bg-bg-primary border border-accent/20 rounded-xl py-3 pl-12 pr-4 text-text-primary focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all"
                 placeholder="Enter your password"
                 required
               />
@@ -93,7 +98,7 @@ export default function LoginPage() {
         </form>
 
         <div className="mt-6 text-center text-sm text-text-secondary">
-          Don't have an account?{' '}
+          Need help?{' '}
           <Link href="/contact" className="text-accent hover:underline">
             Contact Support
           </Link>

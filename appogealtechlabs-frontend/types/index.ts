@@ -49,15 +49,15 @@ export interface Service {
 
 // Testimonial
 export interface Testimonial {
-  id: number;
+  id: string;
   client_name: string;
-  client_position: string;
-  client_photo: string | null;
-  company_name: string;
-  testimonial_text: string;
+  client_title: string;
+  client_company: string;
+  avatar: string | null;
+  content: string;
   rating: number;
-  project_title: string | null;
-  is_featured: boolean;
+  project_title?: string | null;
+  is_active: boolean;
   created_at: string;
 }
 

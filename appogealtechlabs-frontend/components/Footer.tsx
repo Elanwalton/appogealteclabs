@@ -1,15 +1,20 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { 
   Twitter, Linkedin, Github, Instagram, Globe, 
   Send, Mail, Phone, MapPin, ArrowRight, Heart, ChevronUp 
 } from 'lucide-react';
 import NewsletterForm from './NewsletterForm';
+import SiteVisitCounter from './SiteVisitCounter';
 
 export default function Footer() {
+  const pathname = usePathname();
   const [showBackToTop, setShowBackToTop] = useState(false);
+
+  if (pathname?.startsWith('/admin')) return null;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,16 +49,21 @@ export default function Footer() {
               Transforming ideas into powerful web experiences.
             </p>
             <div className="flex gap-4">
-              {[Twitter, Linkedin, Github, Instagram, Globe].map((Icon, idx) => (
+              {[Twitter, Linkedin, Github, Instagram, Globe].map((Icon, idx) => {
+                const urls = ['https://twitter.com/appogealtech', 'https://linkedin.com/company/appogealtech', 'https://github.com/appogealtech', 'https://instagram.com/appogealtech', 'https://appogealtechlabs.com'];
+                return (
                 <a 
                   key={idx}
-                  href="#" 
+                  href={urls[idx]}
+                  target="_blank"
+                  rel="noopener noreferrer" 
                   className="social-link w-11 h-11 flex items-center justify-center bg-[rgba(100,255,218,0.05)] border border-[rgba(100,255,218,0.2)] rounded-xl text-accent transition-all duration-300 hover:bg-[rgba(100,255,218,0.1)] hover:border-[rgba(100,255,218,0.4)] hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(100,255,218,0.2)]"
                   aria-label="Social Link"
                 >
                   <Icon size={20} />
                 </a>
-              ))}
+                );
+              })}
             </div>
           </div>
           
@@ -93,10 +103,10 @@ export default function Footer() {
              <ul className="footer-links flex flex-col gap-3.5">
                {['Documentation', 'Tutorials', 'Case Studies', 'FAQ', 'Privacy Policy', 'Terms'].map((item) => (
                  <li key={item}>
-                   <a href="#" className="text-text-secondary text-[0.9375rem] transition-all duration-300 hover:text-accent hover:pl-5 relative group">
+                   <Link href={`/${item.toLowerCase().replace(' ', '-')}`} className="text-text-secondary text-[0.9375rem] transition-all duration-300 hover:text-accent hover:pl-5 relative group">
                      <span className="absolute left-[-20px] opacity-0 text-accent transition-all duration-300 group-hover:left-0 group-hover:opacity-100">→</span>
                      {item}
-                   </a>
+                   </Link>
                  </li>
                ))}
              </ul>
@@ -145,12 +155,11 @@ export default function Footer() {
           <p className="text-text-secondary text-sm">
             © 2026 AppogealtechLabs. All rights reserved.
           </p>
+          <SiteVisitCounter />
           <div className="flex items-center gap-4 text-text-secondary text-sm">
-            <a href="#" className="hover:text-accent transition-colors">Privacy Policy</a>
+            <Link href="/privacy-policy" className="hover:text-accent transition-colors">Privacy Policy</Link>
             <span className="text-[rgba(100,255,218,0.3)]">•</span>
-            <a href="#" className="hover:text-accent transition-colors">Terms of Service</a>
-            <span className="text-[rgba(100,255,218,0.3)]">•</span>
-            <a href="#" className="hover:text-accent transition-colors">Cookie Policy</a>
+            <Link href="/terms" className="hover:text-accent transition-colors">Terms of Service</Link>
           </div>
           <div className="flex items-center gap-2 text-text-secondary text-sm">
             Made with <Heart size={16} className="text-[#ef4444] animate-[heartbeat_1.5s_ease-in-out_infinite]" /> in Nairobi

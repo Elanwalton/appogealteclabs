@@ -30,9 +30,30 @@ router.get('/:slug', async (req, res) => {
 // POST /api/projects (Admin)
 router.post('/', authenticate, requireAdmin, async (req, res) => {
   try {
-    const { title, description, image, tech_stack, live_url, repo_url, featured } = req.body;
+    const { 
+      title, tagline, description, image, heroImage, client, category, tags, duration, teamSize, completedDate,
+      overview, challenge, solution, techStack, results, testimonial,
+      liveUrl, repoUrl, githubUrl, featured, relatedProjects 
+    } = req.body;
+    
     const slug = slugify(title);
-    const data = { title, slug, description, image: image || null, tech_stack: tech_stack || [], live_url: live_url || null, repo_url: repo_url || null, featured: featured || false, is_active: true, created_at: new Date().toISOString() };
+    const data = { 
+      title, slug, tagline: tagline || '', description: description || '',
+      image: image || null, heroImage: heroImage || null, client: client || null,
+      category: category || 'Development', tags: tags || [], duration: duration || '', 
+      teamSize: teamSize || 1, completedDate: completedDate || null,
+      overview: overview || '', challenge: challenge || null, solution: solution || null,
+      techStack: techStack || null, results: results || null, testimonial: testimonial || null,
+      liveUrl: liveUrl || null, repoUrl: repoUrl || githubUrl || null, githubUrl: githubUrl || repoUrl || null,
+      featured: featured || false, relatedProjects: relatedProjects || [],
+      is_active: true, created_at: new Date().toISOString() 
+    };
+    
+    // Backwards compatibility for older fields
+    if (req.body.tech_stack) data.tech_stack = req.body.tech_stack;
+    if (req.body.live_url) data.liveUrl = req.body.live_url;
+    if (req.body.repo_url) data.githubUrl = req.body.repo_url;
+    
     const ref = await db.collection('projects').add(data);
     res.status(201).json({ id: ref.id, ...data });
   } catch (error) {

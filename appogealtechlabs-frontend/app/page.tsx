@@ -4,10 +4,40 @@ import ServicesOverview from '@/components/ServicesOverview';
 import TestimonialsCarousel from '@/components/TestimonialsCarousel';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import Script from 'next/script';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'AppogealTechLabs | Modern Software & Agency Solutions',
+  description: 'Top-tier digital agency delivering advanced Next.js, Django, and mobile app solutions. Partner with AppogealTechLabs to scale your business online.',
+  openGraph: {
+    title: 'AppogealTechLabs | Modern Software & Agency Solutions',
+    description: 'Top-tier digital agency delivering advanced Next.js, Django, and mobile app solutions. Partner with AppogealTechLabs to scale your business online.',
+    url: 'https://appogealtechlabs.com',
+  }
+};
+
 
 export default function Home() {
   return (
     <>
+      <Script
+        id="website-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            name: 'AppogealTechLabs',
+            url: 'https://appogealtechlabs.com',
+            potentialAction: {
+              '@type': 'SearchAction',
+              target: 'https://appogealtechlabs.com/search?q={search_term_string}',
+              'query-input': 'required name=search_term_string'
+            }
+          })
+        }}
+      />
       <Hero />
       <FeaturedProjects />
       <ServicesOverview />

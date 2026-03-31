@@ -181,10 +181,10 @@ export default function BlogPage() {
                   <div className="featured-footer">
                     <div className="post-author">
                       <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center text-accent font-bold">
-                        {featuredPost.author.charAt(0).toUpperCase()}
+                        {(featuredPost.author ?? '?').charAt(0).toUpperCase()}
                       </div>
                       <div className="author-info">
-                        <span className="author-name">{featuredPost.author}</span>
+                        <span className="author-name">{featuredPost.author ?? 'Unknown'}</span>
                       </div>
                     </div>
                     <Link href={`/blog/${featuredPost.slug}`} className="read-more-btn">
@@ -235,16 +235,16 @@ export default function BlogPage() {
                     </h3>
                     <p className="card-excerpt">{post.excerpt}</p>
                     <div className="card-tags">
-                      {post.tags.slice(0, 3).map((tag) => (
-                        <span key={tag.id} className="tag-pill">{tag.name}</span>
+                      {post.tags.slice(0, 3).map((tag, index) => (
+                        <span key={typeof tag === 'object' && tag !== null && tag.id ? tag.id : `tag-${index}`} className="tag-pill">{typeof tag === 'object' && tag !== null ? tag.name : String(tag)}</span>
                       ))}
                     </div>
                     <div className="card-footer">
                       <div className="card-author flex items-center gap-2">
                          <div className="w-6 h-6 rounded-full bg-accent/20 flex items-center justify-center text-accent text-xs font-bold">
-                            {post.author.charAt(0).toUpperCase()}
+                            {(post.author ?? '?').charAt(0).toUpperCase()}
                          </div>
-                        <span>{post.author}</span>
+                        <span>{post.author ?? 'Unknown'}</span>
                       </div>
                       <Link href={`/blog/${post.slug}`} className="read-more-link">
                         Read More

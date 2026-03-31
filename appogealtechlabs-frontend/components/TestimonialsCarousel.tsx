@@ -2,83 +2,32 @@
 
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react';
-
-const testimonials = [
-  {
-    id: 1,
-    name: "David Kimani",
-    position: "CEO",
-    company: "TechFlow Solutions",
-    image: "/testimonials/david-kimani.jpg",
-    rating: 5,
-    text: "Appogealtechlabs transformed our outdated system into a modern, efficient platform. Their attention to detail and technical expertise exceeded our expectations. The team delivered on time and within budget.",
-    project: "Custom ERP System",
-    logo: "/companies/techflow-logo.svg"
-  },
-  {
-    id: 2,
-    name: "Sarah Wanjiku",
-    position: "Founder & Director",
-    company: "Bloom Fashion Kenya",
-    image: "/testimonials/sarah-wanjiku.jpg",
-    rating: 5,
-    text: "Working with Appogealtechlabs was a game-changer for our e-commerce business. They built a beautiful, fast, and user-friendly platform that increased our sales by 250% in just three months. Highly recommended!",
-    project: "E-commerce Platform",
-    logo: "/companies/bloom-logo.svg"
-  },
-  {
-    id: 3,
-    name: "Michael Odhiambo",
-    position: "CTO",
-    company: "FinEdge Analytics",
-    image: "/testimonials/michael-odhiambo.jpg",
-    rating: 5,
-    text: "The level of professionalism and technical knowledge was outstanding. They not only built what we asked for but suggested improvements that made our product even better. True partners in innovation.",
-    project: "Financial Dashboard",
-    logo: "/companies/finedge-logo.svg"
-  },
-  {
-    id: 4,
-    name: "Grace Mutua",
-    position: "Marketing Director",
-    company: "Urban Living Properties",
-    image: "/testimonials/grace-mutua.jpg",
-    rating: 5,
-    text: "Our new website is absolutely stunning! The design is modern, the functionality is seamless, and our clients love it. The team was responsive, creative, and delivered beyond expectations.",
-    project: "Real Estate Website",
-    logo: "/companies/urban-logo.svg"
-  },
-  {
-    id: 5,
-    name: "James Mwangi",
-    position: "Operations Manager",
-    company: "Cargo Express East Africa",
-    image: "/testimonials/james-mwangi.jpg",
-    rating: 5,
-    text: "The logistics platform they developed has streamlined our entire operation. Real-time tracking, automated reporting, and an intuitive interface - everything we needed and more. Exceptional work!",
-    project: "Logistics Management System",
-    logo: "/companies/cargo-logo.svg"
-  },
-  {
-    id: 6,
-    name: "Linda Achieng",
-    position: "Head of Digital",
-    company: "EduBright Academy",
-    image: "/testimonials/linda-achieng.jpg",
-    rating: 5,
-    text: "Our e-learning platform is now one of the best in the region. The team understood our vision perfectly and created a solution that our students and teachers absolutely love. Worth every shilling!",
-    project: "E-Learning Platform",
-    logo: "/companies/edubright-logo.svg"
-  }
-];
+import api, { endpoints } from '@/lib/api';
 
 export default function TestimonialsCarousel() {
+  const [testimonials, setTestimonials] = useState<any[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch from Firebase backend
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const response = await api.get(endpoints.testimonials);
+        setTestimonials(response.data);
+      } catch (error) {
+        console.error('Failed to load testimonials:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTestimonials();
+  }, []);
 
   // Auto-advance carousel
   useEffect(() => {
-    if (!isAutoPlaying) return;
+    if (!isAutoPlaying || testimonials.length === 0) return;
     
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % testimonials.length);
@@ -104,163 +53,127 @@ export default function TestimonialsCarousel() {
     setIsAutoPlaying(false);
   };
 
+  if (loading) {
+    return (
+      <section className="py-24 relative overflow-hidden bg-bg-primary">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-12 flex justify-center items-center opacity-50"><div className="w-10 h-10 border-2 border-accent border-t-transparent rounded-full animate-spin"></div></div>
+      </section>
+    );
+  }
+
+  if (testimonials.length === 0) return null;
+
   return (
-    <section className="testimonials-section">
-      <div className="testimonials-container">
+    <section className="py-24 relative overflow-hidden bg-bg-primary">
+      {/* Background Ornaments */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-12 relative z-10">
         
         {/* Section Header */}
-        <div className="section-header">
-          <span className="section-label">Testimonials</span>
-          <h2 className="section-title">What Our Clients Say</h2>
-          <p className="section-description">
-            Don&apos;t just take our word for it. Here&apos;s what our satisfied clients 
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <span className="text-accent font-mono text-sm tracking-widest uppercase mb-3 block">Testimonials</span>
+          <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-6">What Our Clients Say</h2>
+          <p className="text-lg text-text-secondary leading-relaxed">
+            Don't just take our word for it. Here's what our satisfied clients 
             have to say about working with us.
           </p>
         </div>
 
         {/* Testimonials Carousel */}
-        <div className="testimonials-carousel">
+        <div className="relative max-w-5xl mx-auto">
           
-          {/* Background Decoration */}
-          <div className="carousel-decoration">
-            <Quote className="quote-icon quote-left" />
-            <Quote className="quote-icon quote-right" />
+          <div className="absolute top-10 left-10 opacity-10">
+            <Quote size={120} className="text-accent" />
           </div>
 
-          {/* Main Carousel Content */}
-          <div className="carousel-wrapper">
-            
-            {/* Previous Button */}
-            <button 
-              className="carousel-nav carousel-nav-prev"
-              onClick={handlePrevious}
-              aria-label="Previous testimonial"
+          <div className="overflow-hidden rounded-3xl bg-[rgba(17,34,64,0.6)] backdrop-blur-xl border border-gray-800 shadow-2xl relative">
+            <div 
+              className="flex transition-transform duration-700 ease-in-out"
+              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
             >
-              <ChevronLeft />
-            </button>
-
-            {/* Testimonial Cards Container */}
-            <div className="testimonials-track">
-              {testimonials.map((testimonial, index) => {
-                const isActive = index === currentIndex;
-                const isPrev = index === (currentIndex - 1 + testimonials.length) % testimonials.length;
-                const isNext = index === (currentIndex + 1) % testimonials.length;
-                
-                let positionClass = 'testimonial-card-hidden';
-                if (isActive) positionClass = 'testimonial-card-active';
-                else if (isPrev) positionClass = 'testimonial-card-prev';
-                else if (isNext) positionClass = 'testimonial-card-next';
-
-                return (
-                  <div 
-                    key={testimonial.id}
-                    className={`testimonial-card ${positionClass}`}
-                  >
-                    {/* Company Logo */}
-                    <div className="testimonial-logo">
-                      <img 
-                        src={testimonial.logo} 
-                        alt={`${testimonial.company} logo`}
-                      />
-                    </div>
-
-                    {/* Rating Stars */}
-                    <div className="testimonial-rating">
-                      {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star key={i} className="star-filled" />
-                      ))}
-                    </div>
-
-                    {/* Testimonial Text */}
-                    <blockquote className="testimonial-text">
-                      &quot;{testimonial.text}&quot;
-                    </blockquote>
-
-                    {/* Project Tag */}
-                    <div className="testimonial-project">
-                      Project: {testimonial.project}
-                    </div>
-
-                    {/* Client Info */}
-                    <div className="testimonial-client">
-                      <div className="client-avatar">
-                        <img 
-                          src={testimonial.image} 
-                          alt={testimonial.name}
-                        />
+              {testimonials.map((testimonial, index) => (
+                <div key={testimonial.id} className="w-full shrink-0 p-8 md:p-16">
+                  
+                  <div className="flex flex-col md:flex-row gap-10 items-center md:items-start">
+                    
+                    {/* Image / Avatar */}
+                    <div className="shrink-0 relative">
+                      <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-gray-800 flex items-center justify-center bg-gray-900 shadow-[0_0_20px_rgba(100,255,218,0.2)]">
+                        {testimonial.avatar ? (
+                          <img src={testimonial.avatar} alt={testimonial.client_name} className="w-full h-full object-cover" />
+                        ) : (
+                          <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center text-3xl font-bold text-text-muted">
+                            {testimonial.client_name?.charAt(0) || 'U'}
+                          </div>
+                        )}
                       </div>
-                      <div className="client-info">
-                        <h4 className="client-name">{testimonial.name}</h4>
-                        <p className="client-position">
-                          {testimonial.position}
-                        </p>
-                        <p className="client-company">
-                          {testimonial.company}
-                        </p>
+                      <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 flex bg-gray-900 rounded-full px-3 py-1 border border-gray-800 shadow-lg">
+                        {[...Array(testimonial.rating || 5)].map((_, i) => (
+                          <Star key={i} size={14} className="text-yellow-400 fill-yellow-400" />
+                        ))}
                       </div>
                     </div>
+
+                    {/* Content */}
+                    <div className="flex-1 text-center md:text-left">
+                      <Quote size={40} className="text-accent/40 mb-6 mx-auto md:mx-0" />
+                      <blockquote className="text-xl md:text-2xl text-text-primary leading-relaxed font-medium mb-8">
+                        "{testimonial.content}"
+                      </blockquote>
+                      
+                      <div className="border-t border-gray-800 pt-6 mt-6 flex flex-col md:flex-row justify-between items-center gap-4">
+                        <div>
+                          <h4 className="text-lg font-bold text-accent">{testimonial.client_name}</h4>
+                          <p className="text-sm text-text-secondary uppercase tracking-wider font-mono mt-1">
+                            {testimonial.client_title}{testimonial.client_company ? `, ${testimonial.client_company}` : ''}
+                          </p>
+                        </div>
+                        {testimonial.project && (
+                          <div className="hidden md:block px-4 py-2 bg-accent/10 border border-accent/20 rounded-full text-accent text-xs font-mono">
+                            {testimonial.project}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
                   </div>
-                );
-              })}
+                </div>
+              ))}
             </div>
-
-            {/* Next Button */}
+            
+            {/* Navigation Overlays */}
             <button 
-              className="carousel-nav carousel-nav-next"
-              onClick={handleNext}
-              aria-label="Next testimonial"
+              onClick={handlePrevious}
+              className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-gray-900/80 hover:bg-accent border border-gray-700 hover:border-accent text-text-secondary hover:text-bg-primary rounded-full flex items-center justify-center backdrop-blur transition-all z-10 group"
             >
-              <ChevronRight />
+              <ChevronLeft className="group-hover:-translate-x-0.5 transition-transform" />
+            </button>
+            <button 
+              onClick={handleNext}
+              className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-gray-900/80 hover:bg-accent border border-gray-700 hover:border-accent text-text-secondary hover:text-bg-primary rounded-full flex items-center justify-center backdrop-blur transition-all z-10 group"
+            >
+              <ChevronRight className="group-hover:translate-x-0.5 transition-transform" />
             </button>
           </div>
 
-          {/* Carousel Indicators (Dots) */}
-          <div className="carousel-indicators">
+          {/* Carousel Indicators */}
+          <div className="flex justify-center items-center gap-3 mt-8">
             {testimonials.map((_, index) => (
               <button
                 key={index}
-                className={`indicator-dot ${index === currentIndex ? 'active' : ''}`}
                 onClick={() => handleDotClick(index)}
+                className={`transition-all duration-300 rounded-full ${
+                  index === currentIndex 
+                  ? 'w-10 h-2.5 bg-accent' 
+                  : 'w-2.5 h-2.5 bg-gray-700 hover:bg-gray-500'
+                }`}
                 aria-label={`Go to testimonial ${index + 1}`}
               />
             ))}
           </div>
-
-          {/* Carousel Controls Info */}
-          <div className="carousel-info">
-            <span className="carousel-counter">
-              {currentIndex + 1} / {testimonials.length}
-            </span>
-            <button 
-              className="carousel-autoplay"
-              onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-              aria-label={isAutoPlaying ? "Pause autoplay" : "Resume autoplay"}
-            >
-              {isAutoPlaying ? "⏸ Pause" : "▶ Play"}
-            </button>
-          </div>
         </div>
-
-        {/* Trust Indicators */}
-        <div className="trust-indicators">
-          <div className="trust-item">
-            <div className="trust-number">50+</div>
-            <div className="trust-label">Happy Clients</div>
-          </div>
-          <div className="trust-item">
-            <div className="trust-number">98%</div>
-            <div className="trust-label">Satisfaction Rate</div>
-          </div>
-          <div className="trust-item">
-            <div className="trust-number">100%</div>
-            <div className="trust-label">Project Success</div>
-          </div>
-          <div className="trust-item">
-            <div className="trust-number">4.9/5</div>
-            <div className="trust-label">Average Rating</div>
-          </div>
-        </div>
-
       </div>
     </section>
   );
