@@ -48,6 +48,7 @@ export default function NewsletterForm() {
           />
           <button
             type="submit"
+            aria-label="Subscribe to newsletter"
             disabled={status === 'loading' || status === 'success'}
             className={`newsletter-submit absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-lg transition-all duration-300 ${status === 'success' ? 'bg-green-500 text-white' : 'bg-gradient-to-br from-accent to-[#00d4ff] text-[#0a192f] hover:scale-105 hover:shadow-[0_4px_16px_rgba(100,255,218,0.4)]'}`}
           >

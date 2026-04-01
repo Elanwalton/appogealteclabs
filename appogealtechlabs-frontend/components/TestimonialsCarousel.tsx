@@ -146,12 +146,14 @@ export default function TestimonialsCarousel() {
             {/* Navigation Overlays */}
             <button 
               onClick={handlePrevious}
+              aria-label="Previous testimonial"
               className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-gray-900/80 hover:bg-accent border border-gray-700 hover:border-accent text-text-secondary hover:text-bg-primary rounded-full flex items-center justify-center backdrop-blur transition-all z-10 group"
             >
               <ChevronLeft className="group-hover:-translate-x-0.5 transition-transform" />
             </button>
             <button 
               onClick={handleNext}
+              aria-label="Next testimonial"
               className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-gray-900/80 hover:bg-accent border border-gray-700 hover:border-accent text-text-secondary hover:text-bg-primary rounded-full flex items-center justify-center backdrop-blur transition-all z-10 group"
             >
               <ChevronRight className="group-hover:translate-x-0.5 transition-transform" />
@@ -164,13 +166,15 @@ export default function TestimonialsCarousel() {
               <button
                 key={index}
                 onClick={() => handleDotClick(index)}
-                className={`transition-all duration-300 rounded-full ${
+                className="p-2 -m-2 group"
+                aria-label={`Go to testimonial ${index + 1}`}
+              >
+                <div className={`transition-all duration-300 rounded-full ${
                   index === currentIndex 
                   ? 'w-10 h-2.5 bg-accent' 
-                  : 'w-2.5 h-2.5 bg-gray-700 hover:bg-gray-500'
-                }`}
-                aria-label={`Go to testimonial ${index + 1}`}
-              />
+                  : 'w-2.5 h-2.5 bg-gray-700 group-hover:bg-gray-500'
+                }`} />
+              </button>
             ))}
           </div>
         </div>

@@ -1,9 +1,12 @@
 import Hero from '@/components/Hero';
 import FeaturedProjects from '@/components/FeaturedProjects';
-import ServicesOverview from '@/components/ServicesOverview';
-import TestimonialsCarousel from '@/components/TestimonialsCarousel';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+
+// Lazy load below-the-fold components to reduce initial JS payload
+const ServicesOverview = dynamic(() => import('@/components/ServicesOverview'), { ssr: true });
+const TestimonialsCarousel = dynamic(() => import('@/components/TestimonialsCarousel'), { ssr: true });
 import Script from 'next/script';
 import { Metadata } from 'next';
 
