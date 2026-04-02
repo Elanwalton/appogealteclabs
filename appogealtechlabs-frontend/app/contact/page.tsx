@@ -93,7 +93,7 @@ export default function ContactPage() {
               <div>
                 <h3 className="text-lg font-bold text-text-primary mb-1">Call Us</h3>
                 <p className="text-text-secondary mb-1">Mon-Fri from 8am to 5pm.</p>
-                <a href="tel:+254700000000" className="text-accent hover:underline font-mono">+254 700 000 000</a>
+                <a href="tel:+254740886459" className="text-accent hover:underline font-mono">+254 740 886 459</a>
               </div>
             </div>
           </div>

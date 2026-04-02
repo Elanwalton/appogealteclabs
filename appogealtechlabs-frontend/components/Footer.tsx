@@ -134,7 +134,7 @@ export default function Footer() {
               </div>
               <div className="contact-item flex items-center gap-3 text-text-secondary text-sm group">
                 <Phone size={18} className="text-accent flex-shrink-0" />
-                <a href="tel:+254700000000" className="hover:text-accent transition-colors">+254 700 000 000</a>
+                <a href="tel:+254740886459" className="hover:text-accent transition-colors">+254 740 886 459</a>
               </div>
               <div className="contact-item flex items-center gap-3 text-text-secondary text-sm">
                 <MapPin size={18} className="text-accent flex-shrink-0" />

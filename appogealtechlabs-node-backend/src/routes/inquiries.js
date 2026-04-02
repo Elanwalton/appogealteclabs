@@ -2,6 +2,15 @@ const express = require('express');
 const router = express.Router();
 const { db } = require('../config/firebase');
 const { authenticate, requireAdmin } = require('../middleware/auth');
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+  }
+});
 
 // POST /api/inquiries — Public: submit a contact/inquiry form
 router.post('/', async (req, res) => {
@@ -11,6 +20,21 @@ router.post('/', async (req, res) => {
 
     const data = { name, email, phone: phone || null, service: service || null, message, is_read: false, submitted_at: new Date().toISOString() };
     const ref = await db.collection('inquiries').add(data);
+
+    // Send email notification to Admin
+    if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+      const mailOptions = {
+        from: `"${name}" <${process.env.EMAIL_USER}>`,
+        replyTo: email,
+        to: process.env.EMAIL_USER, // sends the email to yourself
+        subject: `New Inquiry from ${name} - ${service || 'General'}`,
+        text: `You have a new inquiry from your website!\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone || 'N/A'}\nService: ${service || 'N/A'}\n\nMessage:\n${message}`
+      };
+
+      // Fire and forget so we don't slow down the user's browser response
+      transporter.sendMail(mailOptions).catch(err => console.error('Error sending inquiry email:', err));
+    }
+
     res.status(201).json({ id: ref.id, message: 'Inquiry submitted successfully. We will get back to you soon!' });
   } catch (error) {
     res.status(500).json({ error: error.message });

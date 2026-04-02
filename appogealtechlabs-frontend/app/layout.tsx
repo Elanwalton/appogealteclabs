@@ -96,7 +96,7 @@ export default function RootLayout({
     ],
     contactPoint: {
       '@type': 'ContactPoint',
-      telephone: '+254700000000',
+      telephone: '+254740886459',
       contactType: 'customer service',
       email: 'hello@appogealtechlabs.com'
     }
