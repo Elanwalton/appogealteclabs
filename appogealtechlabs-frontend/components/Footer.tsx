@@ -14,8 +14,6 @@ export default function Footer() {
   const pathname = usePathname();
   const [showBackToTop, setShowBackToTop] = useState(false);
 
-  if (pathname?.startsWith('/admin')) return null;
-
   useEffect(() => {
     const handleScroll = () => {
       setShowBackToTop(window.scrollY > 500);
@@ -23,6 +21,8 @@ export default function Footer() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  if (pathname?.startsWith('/admin')) return null;
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -71,11 +71,18 @@ export default function Footer() {
           <div>
             <h4 className="footer-column-title text-lg font-bold text-text-primary mb-6 relative pb-3 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-10 after:h-0.5 after:bg-gradient-to-r after:from-accent after:to-transparent">Quick Links</h4>
             <ul className="footer-links flex flex-col gap-3.5">
-              {['Home', 'About Us', 'Projects', 'Services', 'Blog', 'Contact'].map((item) => (
-                <li key={item}>
-                  <Link href={`/${item.toLowerCase().replace(' ', '-')}`} className="text-text-secondary text-[0.9375rem] transition-all duration-300 hover:text-accent hover:pl-5 relative group">
+              {[
+                { label: 'Home', href: '/' },
+                { label: 'About Us', href: '/about' },
+                { label: 'Projects', href: '/projects' },
+                { label: 'Services', href: '/services' },
+                { label: 'Blog', href: '/blog' },
+                { label: 'Contact', href: '/contact' }
+              ].map((item) => (
+                <li key={item.label}>
+                  <Link href={item.href} className="text-text-secondary text-[0.9375rem] transition-all duration-300 hover:text-accent hover:pl-5 relative group">
                     <span className="absolute left-[-20px] opacity-0 text-accent transition-all duration-300 group-hover:left-0 group-hover:opacity-100">→</span>
-                    {item}
+                    {item.label}
                   </Link>
                 </li>
               ))}

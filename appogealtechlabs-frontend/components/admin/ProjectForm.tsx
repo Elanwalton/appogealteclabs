@@ -225,70 +225,212 @@ export default function ProjectForm({ projectId }: { projectId?: string }) {
           </div>
         </div>
 
-        {/* Deep Content - Quick JSON Edit for advanced fields to save time & complexity */}
+        {/* Advanced Content Replacements */}
+        
+        {/* Challenge & Overview */}
         <div className="bg-bg-secondary border border-gray-800 rounded-2xl p-6">
-          <h2 className="text-xl font-bold text-text-primary mb-2">Advanced Content (JSON)</h2>
-          <p className="text-text-muted text-sm mb-6">Edit the deep nested objects (challenge, solution, techStack, results, testimonial) directly as JSON below.</p>
-          
+          <h2 className="text-xl font-bold text-text-primary mb-6">Challenge & Overview</h2>
           <div className="space-y-6">
             <div>
-              <label className="block text-sm font-semibold text-text-muted mb-2">Challenge & Overview</label>
-              <textarea 
-                value={JSON.stringify({ overview: form.overview, challenge: form.challenge }, null, 2)}
-                onChange={e => {
-                  try {
-                    const parsed = JSON.parse(e.target.value);
-                    setForm({...form, overview: parsed.overview, challenge: parsed.challenge});
-                  } catch (err) {} // Ignore parse errors while typing
-                }}
-                rows={10} 
-                className="w-full font-mono text-xs bg-bg-primary border border-gray-700 rounded-xl px-4 py-2.5 text-text-primary focus:border-accent outline-none"
-              />
+              <label className="block text-sm font-semibold text-text-muted mb-2">Project Overview</label>
+              <textarea value={form.overview} onChange={e => setForm({...form, overview: e.target.value})} rows={3} className="w-full bg-bg-primary border border-gray-700 rounded-xl px-4 py-2.5 text-text-primary focus:border-accent outline-none" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="md:col-span-2">
+                <label className="block text-sm font-semibold text-text-muted mb-2">Challenge Title</label>
+                <input value={form.challenge.title} onChange={e => handleNestedChange('challenge', 'title', e.target.value)} className="w-full bg-bg-primary border border-gray-700 rounded-xl px-4 py-2.5 text-text-primary focus:border-accent outline-none" />
+              </div>
+              <div className="md:col-span-2">
+                <label className="block text-sm font-semibold text-text-muted mb-2">Challenge Description</label>
+                <textarea value={form.challenge.description} onChange={e => handleNestedChange('challenge', 'description', e.target.value)} rows={3} className="w-full bg-bg-primary border border-gray-700 rounded-xl px-4 py-2.5 text-text-primary focus:border-accent outline-none" />
+              </div>
+              <div className="md:col-span-2">
+                <label className="block text-sm font-semibold text-text-muted mb-2">Challenge Image URL</label>
+                <input value={form.challenge.image} onChange={e => handleNestedChange('challenge', 'image', e.target.value)} className="w-full bg-bg-primary border border-gray-700 rounded-xl px-4 py-2.5 text-text-primary focus:border-accent outline-none" />
+              </div>
+              
+              <div className="md:col-span-2">
+                <div className="flex items-center justify-between mb-2">
+                  <label className="block text-sm font-semibold text-text-muted">Problems (List Items)</label>
+                  <button type="button" onClick={() => addArrayString('challenge', 'problems')} className="text-accent hover:text-white flex items-center gap-1 text-sm"><Plus size={14}/> Add Problem</button>
+                </div>
+                <div className="space-y-3">
+                  {(form.challenge.problems || []).map((prob: string, idx: number) => (
+                    <div key={idx} className="flex gap-2">
+                      <input value={prob} onChange={e => handleArrayStringChange('challenge', 'problems', idx, e.target.value)} className="flex-1 bg-bg-primary border border-gray-700 rounded-xl px-4 py-2 text-text-primary focus:border-accent outline-none" />
+                      <button type="button" onClick={() => removeArrayString('challenge', 'problems', idx)} className="p-2 text-red-400 hover:bg-red-500/10 rounded-lg"><Trash2 size={18} /></button>
+                    </div>
+                  ))}
+                  {(!form.challenge.problems || form.challenge.problems.length === 0) && <div className="text-sm text-text-muted italic">No problems added yet.</div>}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Solution Setup */}
+        <div className="bg-bg-secondary border border-gray-800 rounded-2xl p-6">
+          <h2 className="text-xl font-bold text-text-primary mb-6">Our Solution</h2>
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="md:col-span-2">
+                <label className="block text-sm font-semibold text-text-muted mb-2">Solution Title</label>
+                <input value={form.solution.title} onChange={e => handleNestedChange('solution', 'title', e.target.value)} className="w-full bg-bg-primary border border-gray-700 rounded-xl px-4 py-2.5 text-text-primary focus:border-accent outline-none" />
+              </div>
+              <div className="md:col-span-2">
+                <label className="block text-sm font-semibold text-text-muted mb-2">Solution Description</label>
+                <textarea value={form.solution.description} onChange={e => handleNestedChange('solution', 'description', e.target.value)} rows={3} className="w-full bg-bg-primary border border-gray-700 rounded-xl px-4 py-2.5 text-text-primary focus:border-accent outline-none" />
+              </div>
+              
+              <div className="md:col-span-2">
+                <div className="flex items-center justify-between mb-2">
+                  <label className="block text-sm font-semibold text-text-muted">Approach Steps</label>
+                  <button type="button" onClick={() => addArrayString('solution', 'approach')} className="text-accent hover:text-white flex items-center gap-1 text-sm"><Plus size={14}/> Add Step</button>
+                </div>
+                <div className="space-y-3">
+                  {(form.solution.approach || []).map((item: string, idx: number) => (
+                    <div key={idx} className="flex gap-2">
+                      <input value={item} onChange={e => handleArrayStringChange('solution', 'approach', idx, e.target.value)} className="flex-1 bg-bg-primary border border-gray-700 rounded-xl px-4 py-2 text-text-primary focus:border-accent outline-none" />
+                      <button type="button" onClick={() => removeArrayString('solution', 'approach', idx)} className="p-2 text-red-400 hover:bg-red-500/10 rounded-lg"><Trash2 size={18} /></button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="md:col-span-2">
+                <div className="flex items-center justify-between mb-2">
+                  <label className="block text-sm font-semibold text-text-muted">Key Features</label>
+                  <button type="button" onClick={() => addArrayString('solution', 'features')} className="text-accent hover:text-white flex items-center gap-1 text-sm"><Plus size={14}/> Add Feature</button>
+                </div>
+                <div className="space-y-3">
+                  {(form.solution.features || []).map((item: string, idx: number) => (
+                    <div key={idx} className="flex gap-2">
+                      <input value={item} onChange={e => handleArrayStringChange('solution', 'features', idx, e.target.value)} className="flex-1 bg-bg-primary border border-gray-700 rounded-xl px-4 py-2 text-text-primary focus:border-accent outline-none" />
+                      <button type="button" onClick={() => removeArrayString('solution', 'features', idx)} className="p-2 text-red-400 hover:bg-red-500/10 rounded-lg"><Trash2 size={18} /></button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="md:col-span-2">
+                <div className="flex items-center justify-between mb-2">
+                  <label className="block text-sm font-semibold text-text-muted">Solution Images (URLs)</label>
+                  <button type="button" onClick={() => addArrayString('solution', 'images')} className="text-accent hover:text-white flex items-center gap-1 text-sm"><Plus size={14}/> Add Image</button>
+                </div>
+                <div className="space-y-3">
+                  {(form.solution.images || []).map((item: string, idx: number) => (
+                    <div key={idx} className="flex gap-2">
+                      <input value={item} onChange={e => handleArrayStringChange('solution', 'images', idx, e.target.value)} className="flex-1 bg-bg-primary border border-gray-700 rounded-xl px-4 py-2 text-text-primary focus:border-accent outline-none" />
+                      <button type="button" onClick={() => removeArrayString('solution', 'images', idx)} className="p-2 text-red-400 hover:bg-red-500/10 rounded-lg"><Trash2 size={18} /></button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Tech Stack */}
+        <div className="bg-bg-secondary border border-gray-800 rounded-2xl p-6">
+          <h2 className="text-xl font-bold text-text-primary mb-6">Tech Stack</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {['frontend', 'backend', 'infrastructure', 'tools'].map((techType) => (
+              <div key={techType}>
+                <div className="flex items-center justify-between mb-2">
+                  <label className="block text-sm font-semibold text-text-muted capitalize">{techType}</label>
+                  <button type="button" onClick={() => addArrayString('techStack', techType)} className="text-accent hover:text-white flex items-center gap-1 text-sm"><Plus size={14}/> Add</button>
+                </div>
+                <div className="space-y-3">
+                  {(form.techStack[techType] || []).map((item: string, idx: number) => (
+                    <div key={idx} className="flex gap-2">
+                      <input value={item} onChange={e => handleArrayStringChange('techStack', techType, idx, e.target.value)} className="flex-1 bg-bg-primary border border-gray-700 rounded-xl px-4 py-2 text-text-primary focus:border-accent outline-none" />
+                      <button type="button" onClick={() => removeArrayString('techStack', techType, idx)} className="p-2 text-red-400 hover:bg-red-500/10 rounded-lg"><Trash2 size={18} /></button>
+                    </div>
+                  ))}
+                  {(!form.techStack[techType] || form.techStack[techType].length === 0) && <div className="text-sm text-text-muted italic">None added</div>}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Results */}
+        <div className="bg-bg-secondary border border-gray-800 rounded-2xl p-6">
+          <h2 className="text-xl font-bold text-text-primary mb-6">Results & Outcomes</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="md:col-span-2">
+              <label className="block text-sm font-semibold text-text-muted mb-2">Results Title</label>
+              <input value={form.results.title} onChange={e => handleNestedChange('results', 'title', e.target.value)} className="w-full bg-bg-primary border border-gray-700 rounded-xl px-4 py-2.5 text-text-primary focus:border-accent outline-none" />
+            </div>
+            <div className="md:col-span-2">
+              <label className="block text-sm font-semibold text-text-muted mb-2">Results Description</label>
+              <textarea value={form.results.description} onChange={e => handleNestedChange('results', 'description', e.target.value)} rows={3} className="w-full bg-bg-primary border border-gray-700 rounded-xl px-4 py-2.5 text-text-primary focus:border-accent outline-none" />
+            </div>
+            <div className="md:col-span-2">
+              <label className="block text-sm font-semibold text-text-muted mb-2">Results Image URL</label>
+              <input value={form.results.image} onChange={e => handleNestedChange('results', 'image', e.target.value)} className="w-full bg-bg-primary border border-gray-700 rounded-xl px-4 py-2.5 text-text-primary focus:border-accent outline-none" />
+            </div>
+            
+            <div className="md:col-span-2">
+              <div className="flex items-center justify-between mb-2">
+                <label className="block text-sm font-semibold text-text-muted">Key Metrics</label>
+                <button type="button" onClick={() => addArrayString('results', 'metrics')} className="text-accent hover:text-white flex items-center gap-1 text-sm"><Plus size={14}/> Add Metric</button>
+              </div>
+              <div className="space-y-3">
+                {(form.results.metrics || []).map((item: string, idx: number) => (
+                  <div key={idx} className="flex gap-2">
+                    <input value={item} onChange={e => handleArrayStringChange('results', 'metrics', idx, e.target.value)} placeholder="e.g. 50% increase in revenue" className="flex-1 bg-bg-primary border border-gray-700 rounded-xl px-4 py-2 text-text-primary focus:border-accent outline-none" />
+                    <button type="button" onClick={() => removeArrayString('results', 'metrics', idx)} className="p-2 text-red-400 hover:bg-red-500/10 rounded-lg"><Trash2 size={18} /></button>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="md:col-span-2">
+              <div className="flex items-center justify-between mb-2">
+                <label className="block text-sm font-semibold text-text-muted">Other Outcomes</label>
+                <button type="button" onClick={() => addArrayString('results', 'outcomes')} className="text-accent hover:text-white flex items-center gap-1 text-sm"><Plus size={14}/> Add Outcome</button>
+              </div>
+              <div className="space-y-3">
+                {(form.results.outcomes || []).map((item: string, idx: number) => (
+                  <div key={idx} className="flex gap-2">
+                    <input value={item} onChange={e => handleArrayStringChange('results', 'outcomes', idx, e.target.value)} className="flex-1 bg-bg-primary border border-gray-700 rounded-xl px-4 py-2 text-text-primary focus:border-accent outline-none" />
+                    <button type="button" onClick={() => removeArrayString('results', 'outcomes', idx)} className="p-2 text-red-400 hover:bg-red-500/10 rounded-lg"><Trash2 size={18} /></button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Testimonial */}
+        <div className="bg-bg-secondary border border-gray-800 rounded-2xl p-6">
+          <h2 className="text-xl font-bold text-text-primary mb-6">Client Testimonial</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="md:col-span-2">
+              <label className="block text-sm font-semibold text-text-muted mb-2">Testimonial Text</label>
+              <textarea value={form.testimonial.text} onChange={e => handleNestedChange('testimonial', 'text', e.target.value)} rows={3} className="w-full bg-bg-primary border border-gray-700 rounded-xl px-4 py-2.5 text-text-primary focus:border-accent outline-none" />
             </div>
             
             <div>
-              <label className="block text-sm font-semibold text-text-muted mb-2">Solution Setup</label>
-              <textarea 
-                value={JSON.stringify(form.solution, null, 2)}
-                onChange={e => {
-                  try {
-                    const parsed = JSON.parse(e.target.value);
-                    setForm({...form, solution: parsed});
-                  } catch (err) {}
-                }}
-                rows={12} 
-                className="w-full font-mono text-xs bg-bg-primary border border-gray-700 rounded-xl px-4 py-2.5 text-text-primary focus:border-accent outline-none"
-              />
+              <label className="block text-sm font-semibold text-text-muted mb-2">Author Name</label>
+              <input value={form.testimonial.author?.name || ''} onChange={e => setForm({...form, testimonial: {...form.testimonial, author: {...(form.testimonial.author || {}), name: e.target.value}}})} className="w-full bg-bg-primary border border-gray-700 rounded-xl px-4 py-2.5 text-text-primary focus:border-accent outline-none" />
             </div>
-
             <div>
-              <label className="block text-sm font-semibold text-text-muted mb-2">Tech Stack</label>
-              <textarea 
-                value={JSON.stringify(form.techStack, null, 2)}
-                onChange={e => {
-                  try {
-                    const parsed = JSON.parse(e.target.value);
-                    setForm({...form, techStack: parsed});
-                  } catch (err) {}
-                }}
-                rows={8} 
-                className="w-full font-mono text-xs bg-bg-primary border border-gray-700 rounded-xl px-4 py-2.5 text-text-primary focus:border-accent outline-none"
-              />
+              <label className="block text-sm font-semibold text-text-muted mb-2">Author Position</label>
+              <input value={form.testimonial.author?.position || ''} onChange={e => setForm({...form, testimonial: {...form.testimonial, author: {...(form.testimonial.author || {}), position: e.target.value}}})} className="w-full bg-bg-primary border border-gray-700 rounded-xl px-4 py-2.5 text-text-primary focus:border-accent outline-none" />
             </div>
-
             <div>
-              <label className="block text-sm font-semibold text-text-muted mb-2">Results & Testimonial</label>
-              <textarea 
-                value={JSON.stringify({ results: form.results, testimonial: form.testimonial }, null, 2)}
-                onChange={e => {
-                  try {
-                    const parsed = JSON.parse(e.target.value);
-                    setForm({...form, results: parsed.results, testimonial: parsed.testimonial});
-                  } catch (err) {}
-                }}
-                rows={12} 
-                className="w-full font-mono text-xs bg-bg-primary border border-gray-700 rounded-xl px-4 py-2.5 text-text-primary focus:border-accent outline-none"
-              />
+              <label className="block text-sm font-semibold text-text-muted mb-2">Company</label>
+              <input value={form.testimonial.author?.company || ''} onChange={e => setForm({...form, testimonial: {...form.testimonial, author: {...(form.testimonial.author || {}), company: e.target.value}}})} className="w-full bg-bg-primary border border-gray-700 rounded-xl px-4 py-2.5 text-text-primary focus:border-accent outline-none" />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-text-muted mb-2">Avatar URL</label>
+              <input value={form.testimonial.author?.avatar || ''} onChange={e => setForm({...form, testimonial: {...form.testimonial, author: {...(form.testimonial.author || {}), avatar: e.target.value}}})} className="w-full bg-bg-primary border border-gray-700 rounded-xl px-4 py-2.5 text-text-primary focus:border-accent outline-none" />
+            </div>
+            <div className="md:col-span-2">
+              <label className="block text-sm font-semibold text-text-muted mb-2">Rating (Out of 5)</label>
+              <input type="number" min="1" max="5" value={form.testimonial.rating} onChange={e => handleNestedChange('testimonial', 'rating', parseFloat(e.target.value) || 5)} className="w-full bg-bg-primary border border-gray-700 rounded-xl px-4 py-2.5 text-text-primary focus:border-accent outline-none" />
             </div>
           </div>
         </div>
