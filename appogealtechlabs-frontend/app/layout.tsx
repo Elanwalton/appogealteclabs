@@ -32,6 +32,10 @@ export const metadata: Metadata = {
     default: 'AppogealTechLabs - Modern Digital Solutions',
     template: '%s | AppogealTechLabs',
   },
+  icons: {
+    icon: '/MySocialsLogo.png',
+    apple: '/MySocialsLogo.png',
+  },
   description: 'Cutting-edge web development agency specializing in Next.js, Django, and modern digital solutions. We build scalable, high-performance applications.',
   keywords: ['Web Development', 'Next.js', 'Django', 'React', 'Mobile Apps', 'Software Agency', 'Nairobi'],
   authors: [{ name: 'AppogealTechLabs' }],
