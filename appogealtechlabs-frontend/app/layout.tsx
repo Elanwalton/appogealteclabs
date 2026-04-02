@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     title: 'AppogealTechLabs - Modern Digital Solutions',
     description: 'Cutting-edge web development agency specializing in Next.js and Django applications.',
     images: ['/og-image.jpg'],
-    creator: '@appogealtech',
+    creator: '@Appogealtec58107',
   },
   robots: {
     index: true,
@@ -91,8 +91,9 @@ export default function RootLayout({
     logo: 'https://appogealtechlabs.com/og-image.jpg',
     description: 'Cutting-edge web development agency specializing in Next.js, Node.js, and modern digital solutions.',
     sameAs: [
-      'https://twitter.com/appogealtech',
-      'https://linkedin.com/company/appogealtechlabs'
+      'https://twitter.com/Appogealtec58107',
+      'https://instagram.com/appogealtechlabs',
+      'https://facebook.com/appogealtechlabs'
     ],
     contactPoint: {
       '@type': 'ContactPoint',

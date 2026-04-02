@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { 
-  Twitter, Linkedin, Github, Instagram, Globe, 
+  Twitter, Instagram, Facebook, MessageCircle, Globe, 
   Send, Mail, Phone, MapPin, ArrowRight, Heart, ChevronUp 
 } from 'lucide-react';
 import NewsletterForm from './NewsletterForm';
@@ -49,8 +49,14 @@ export default function Footer() {
               Transforming ideas into powerful web experiences.
             </p>
             <div className="flex gap-4">
-              {[Twitter, Linkedin, Github, Instagram, Globe].map((Icon, idx) => {
-                const urls = ['https://twitter.com/appogealtech', 'https://linkedin.com/company/appogealtech', 'https://github.com/appogealtech', 'https://instagram.com/appogealtech', 'https://appogealtechlabs.com'];
+              {[Twitter, Instagram, Facebook, MessageCircle, Globe].map((Icon, idx) => {
+                const urls = [
+                  'https://twitter.com/Appogealtec58107', 
+                  'https://instagram.com/appogealtechlabs', 
+                  'https://facebook.com/appogealtechlabs', 
+                  'https://wa.me/254740886459', 
+                  'https://appogealtechlabs.com'
+                ];
                 return (
                 <a 
                   key={idx}
